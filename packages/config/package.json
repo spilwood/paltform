@@ -1,5 +1,5 @@
 {
-  "name": "@acme/config",
+  "name": "@spilwood/config",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -27,7 +27,7 @@
     "zod": "4.1.13"
   },
   "devDependencies": {
-    "@acme/tsconfig": "workspace:*",
+    "@spilwood/tsconfig": "workspace:*",
     "tsup": "8.5.1",
     "typescript": "5.9.3"
   }

@@ -1,4 +1,4 @@
-import { db } from "@acme/db/client";
+import { db } from "@spilwood/db/client";
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";

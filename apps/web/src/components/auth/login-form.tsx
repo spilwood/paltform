@@ -15,8 +15,8 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from "@acme/ui";
-import { type LoginFormData, loginFormSchema } from "@acme/validators";
+} from "@spilwood/ui";
+import { type LoginFormData, loginFormSchema } from "@spilwood/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

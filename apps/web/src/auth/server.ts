@@ -1,8 +1,8 @@
 import "server-only";
 
-import { initAuth } from "@acme/auth";
-import { env } from "@acme/config";
-import { OtpSignInEmail, sendEmail } from "@acme/emails";
+import { initAuth } from "@spilwood/auth";
+import { env } from "@spilwood/config";
+import { OtpSignInEmail, sendEmail } from "@spilwood/emails";
 import { nextCookies } from "better-auth/next-js";
 import { headers } from "next/headers";
 import { cache } from "react";
@@ -21,7 +21,7 @@ export const auth = initAuth({
   googleClientId: env.AUTH_GOOGLE_ID,
   googleClientSecret: env.AUTH_GOOGLE_SECRET,
   extraPlugins: [nextCookies()],
-  // sendEmail is used by the internal emailOTP plugin defined in @acme/auth
+  // sendEmail is used by the internal emailOTP plugin defined in @spilwood/auth
   sendEmail: async ({
     email,
     otp,
@@ -40,5 +40,5 @@ export const auth = initAuth({
 });
 
 export const getSession = cache(async () =>
-  auth.api.getSession({ headers: await headers() }),
+  auth.api.getSession({ headers: await headers() })
 );

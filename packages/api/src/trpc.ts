@@ -7,8 +7,8 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 
-import type { Auth } from "@acme/auth";
-import { db } from "@acme/db/client";
+import type { Auth } from "@spilwood/auth";
+import { db } from "@spilwood/db/client";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError, z } from "zod/v4";

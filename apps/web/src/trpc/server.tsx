@@ -1,5 +1,5 @@
-import type { AppRouter } from "@acme/api";
-import { appRouter, createTRPCContext } from "@acme/api";
+import type { AppRouter } from "@spilwood/api";
+import { appRouter, createTRPCContext } from "@spilwood/api";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import type { TRPCQueryOptions } from "@trpc/tanstack-react-query";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
@@ -50,7 +50,7 @@ export function HydrateClient(props: { children: React.ReactNode }) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // biome-ignore lint/suspicious/noExplicitAny: Required for TRPC type compatibility
 export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
-  queryOptions: T,
+  queryOptions: T
 ) {
   const queryClient = getQueryClient();
   if (queryOptions.queryKey[1]?.type === "infinite") {

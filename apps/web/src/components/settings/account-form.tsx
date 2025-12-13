@@ -14,8 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
   toast,
-} from "@acme/ui";
-import { type AccountFormValues, accountFormSchema } from "@acme/validators";
+} from "@spilwood/ui";
+import {
+  type AccountFormValues,
+  accountFormSchema,
+} from "@spilwood/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -58,7 +61,7 @@ export function AccountForm({
       onError: (err) => {
         toast.error(err.message || "Failed to update account");
       },
-    }),
+    })
   );
 
   function onSubmit(data: AccountFormValues) {

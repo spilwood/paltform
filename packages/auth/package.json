@@ -1,5 +1,5 @@
 {
-  "name": "@acme/auth",
+  "name": "@spilwood/auth",
   "private": true,
   "type": "module",
   "exports": {
@@ -18,14 +18,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/config": "workspace:*",
-    "@acme/db": "workspace:*",
+    "@spilwood/config": "workspace:*",
+    "@spilwood/db": "workspace:*",
     "better-auth": "1.4.6",
     "zod": "4.1.13"
   },
   "devDependencies": {
-    "@acme/tsconfig": "workspace:*",
     "@better-auth/cli": "1.4.6",
+    "@spilwood/tsconfig": "workspace:*",
     "typescript": "5.9.3"
   }
 }

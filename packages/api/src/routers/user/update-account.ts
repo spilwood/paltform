@@ -1,5 +1,5 @@
-import { eq, user } from "@acme/db";
-import { accountFormSchema } from "@acme/validators";
+import { eq, user } from "@spilwood/db";
+import { accountFormSchema } from "@spilwood/validators";
 
 import { protectedProcedure } from "../../trpc";
 

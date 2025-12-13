@@ -1,5 +1,5 @@
 {
-  "name": "@acme/tailwind-config",
+  "name": "@spilwood/tailwind-config",
   "private": true,
   "type": "module",
   "exports": {
@@ -20,7 +20,7 @@
     "tailwindcss": "4.1.18"
   },
   "devDependencies": {
-    "@acme/tsconfig": "*",
+    "@spilwood/tsconfig": "*",
     "@types/node": "25.0.1",
     "typescript": "5.9.3"
   }

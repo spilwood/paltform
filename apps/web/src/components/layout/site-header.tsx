@@ -1,6 +1,6 @@
 "use client";
 
-import { Separator, SidebarTrigger } from "@acme/ui";
+import { Separator, SidebarTrigger } from "@spilwood/ui";
 
 interface SiteHeaderProps {
   title?: string;

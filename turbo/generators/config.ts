@@ -16,7 +16,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: "input",
         name: "name",
         message:
-          "What is the name of the package? (You can skip the `@acme/` prefix)",
+          "What is the name of the package? (You can skip the `@spilwood/` prefix)",
       },
       {
         type: "input",
@@ -28,8 +28,8 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       (answers) => {
         if ("name" in answers && typeof answers.name === "string") {
-          if (answers.name.startsWith("@acme/")) {
-            answers.name = answers.name.replace("@acme/", "");
+          if (answers.name.startsWith("@spilwood/")) {
+            answers.name = answers.name.replace("@spilwood/", "");
           }
         }
         return "Config sanitized";
@@ -62,7 +62,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
             const pkg = JSON.parse(content) as PackageJson;
             for (const dep of answers.deps.split(" ").filter(Boolean)) {
               const version = await fetch(
-                `https://registry.npmjs.org/-/package/${dep}/dist-tags`,
+                `https://registry.npmjs.org/-/package/${dep}/dist-tags`
               )
                 .then((res) => res.json())
                 .then((json) => json.latest);
@@ -84,7 +84,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           // });
           execSync("bun install", { stdio: "inherit" });
           execSync(
-            `bun prettier --write packages/${answers.name}/** --list-different`,
+            `bun prettier --write packages/${answers.name}/** --list-different`
           );
           return "Package scaffolded";
         }

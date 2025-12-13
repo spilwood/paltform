@@ -17,8 +17,8 @@ import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@acme/ui";
-import { type OTPFormData, otpFormSchema } from "@acme/validators";
+} from "@spilwood/ui";
+import { type OTPFormData, otpFormSchema } from "@spilwood/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

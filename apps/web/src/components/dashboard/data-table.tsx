@@ -46,8 +46,8 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@acme/ui";
-import { useIsMobile } from "@acme/ui/hooks";
+} from "@spilwood/ui";
+import { useIsMobile } from "@spilwood/ui/hooks";
 import {
   type DataTableItemData,
   dataTableItemSchema,
@@ -55,7 +55,7 @@ import {
   limitFormSchema,
   type TargetFormData,
   targetFormSchema,
-} from "@acme/validators";
+} from "@spilwood/validators";
 import {
   closestCenter,
   DndContext,
@@ -111,7 +111,7 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { toast } from "sonner";
 import type { z } from "zod";
 
-// Use schema from @acme/validators
+// Use schema from @spilwood/validators
 export const schema = dataTableItemSchema;
 
 // Create a separate component for the drag handle
@@ -396,7 +396,7 @@ export function DataTable({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
+    []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [pagination, setPagination] = React.useState({
@@ -407,12 +407,12 @@ export function DataTable({
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
-    useSensor(KeyboardSensor, {}),
+    useSensor(KeyboardSensor, {})
   );
 
   const dataIds = React.useMemo<UniqueIdentifier[]>(
     () => data?.map(({ id }) => id) || [],
-    [data],
+    [data]
   );
 
   const table = useReactTable({
@@ -501,7 +501,7 @@ export function DataTable({
                 .filter(
                   (column) =>
                     typeof column.accessorFn !== "undefined" &&
-                    column.getCanHide(),
+                    column.getCanHide()
                 )
                 .map((column) => {
                   return (
@@ -548,7 +548,7 @@ export function DataTable({
                             ? null
                             : flexRender(
                                 header.column.columnDef.header,
-                                header.getContext(),
+                                header.getContext()
                               )}
                         </TableHead>
                       );

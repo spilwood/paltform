@@ -1,4 +1,4 @@
-import { eq, user } from "@acme/db";
+import { eq, user } from "@spilwood/db";
 import { protectedProcedure } from "../../trpc";
 
 export const me = protectedProcedure.query(({ ctx }) => {
