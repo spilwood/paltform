@@ -1,5 +1,5 @@
 export function isRecord(v: unknown): v is Record<string, unknown> {
-  return !!v && typeof v === 'object' && !Array.isArray(v);
+  return !!v && typeof v === "object" && !Array.isArray(v);
 }
 
 /**
@@ -16,7 +16,7 @@ export function isRecord(v: unknown): v is Record<string, unknown> {
 export function classNames(...values: any[]): string {
   return values
     .map((value) => {
-      if (typeof value === 'string') {
+      if (typeof value === "string") {
         return value;
       }
 
@@ -31,7 +31,7 @@ export function classNames(...values: any[]): string {
       }
     })
     .filter(Boolean)
-    .join(' ');
+    .join(" ");
 }
 
 type UnionStringKeys<U> = U extends U
@@ -68,15 +68,18 @@ export type MergeClassNames<Tuple extends any[]> =
 export function mergeClassNames<T extends any[]>(
   ...partials: T
 ): MergeClassNames<T> {
-  return partials.reduce<MergeClassNames<T>>((acc, partial) => {
-    if (isRecord(partial)) {
-      Object.entries(partial).forEach(([key, value]) => {
-        const className = classNames((acc as any)[key], value);
-        if (className) {
-          (acc as any)[key] = className;
-        }
-      });
-    }
-    return acc;
-  }, {} as MergeClassNames<T>);
+  return partials.reduce<MergeClassNames<T>>(
+    (acc, partial) => {
+      if (isRecord(partial)) {
+        Object.entries(partial).forEach(([key, value]) => {
+          const className = classNames((acc as any)[key], value);
+          if (className) {
+            (acc as any)[key] = className;
+          }
+        });
+      }
+      return acc;
+    },
+    {} as MergeClassNames<T>,
+  );
 }

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { themeParams, useSignal, useLaunchParams } from '@tma.js/sdk-react';
-import { List } from '@telegram-apps/telegram-ui';
-import { useMemo } from 'react';
+import { themeParams, useSignal, useLaunchParams } from "@tma.js/sdk-react";
+import { List } from "@telegram-apps/telegram-ui";
+import { useMemo } from "react";
 
-import { DisplayData } from '@/components/DisplayData/DisplayData';
-import { Page } from '@/components/Page';
+import { DisplayData } from "@/components/DisplayData/DisplayData";
+import { Page } from "@/components/Page";
 
 export default function ThemeParamsPage() {
   const tp = useSignal(themeParams.state);
@@ -15,11 +15,11 @@ export default function ThemeParamsPage() {
   const themeParamsData = useMemo(() => {
     const state = tp || {};
     const hasState = Object.keys(state).length > 0;
-    
+
     if (hasState) {
       return state;
     }
-    
+
     // Fallback to launch params theme params
     return lp.tgWebAppThemeParams || {};
   }, [tp, lp.tgWebAppThemeParams]);
@@ -28,7 +28,7 @@ export default function ThemeParamsPage() {
     return Object.entries(themeParamsData).map(([title, value]) => ({
       title: title
         .replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`)
-        .replace(/background/, 'bg'),
+        .replace(/background/, "bg"),
       value,
     }));
   }, [themeParamsData]);
@@ -38,7 +38,13 @@ export default function ThemeParamsPage() {
       <Page>
         <List>
           <DisplayData
-            rows={[{ title: 'No theme parameters available', value: 'Theme parameters are not available in the current environment' }]}
+            rows={[
+              {
+                title: "No theme parameters available",
+                value:
+                  "Theme parameters are not available in the current environment",
+              },
+            ]}
           />
         </List>
       </Page>

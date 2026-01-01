@@ -10,7 +10,7 @@ import {
   themeParams,
   retrieveLaunchParams,
   emitEvent,
-} from '@tma.js/sdk-react';
+} from "@tma.js/sdk-react";
 
 /**
  * Initializes the application and configures its dependencies.
@@ -26,7 +26,7 @@ export async function init(options: {
 
   // Add Eruda if needed.
   options.eruda &&
-    void import('eruda').then(({ default: eruda }) => {
+    void import("eruda").then(({ default: eruda }) => {
       eruda.init();
       eruda.position({ x: window.innerWidth - 50, y: 0 });
     });
@@ -38,7 +38,7 @@ export async function init(options: {
     let firstThemeSent = false;
     mockTelegramEnv({
       onEvent(event, next) {
-        if (event.name === 'web_app_request_theme') {
+        if (event.name === "web_app_request_theme") {
           let tp: Partial<ThemeParams> = {};
           if (firstThemeSent) {
             const state = themeParams.state;
@@ -48,11 +48,11 @@ export async function init(options: {
             const lp = retrieveLaunchParams();
             tp = (lp.tgWebAppThemeParams || {}) as Partial<ThemeParams>;
           }
-          return emitEvent('theme_changed', { theme_params: tp as any });
+          return emitEvent("theme_changed", { theme_params: tp as any });
         }
 
-        if (event.name === 'web_app_request_safe_area') {
-          return emitEvent('safe_area_changed', {
+        if (event.name === "web_app_request_safe_area") {
+          return emitEvent("safe_area_changed", {
             left: 0,
             top: 0,
             right: 0,

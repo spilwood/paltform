@@ -61,7 +61,7 @@ export function AccountForm({
       onError: (err) => {
         toast.error(err.message || "Failed to update account");
       },
-    })
+    }),
   );
 
   function onSubmit(data: AccountFormValues) {

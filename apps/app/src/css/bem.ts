@@ -1,12 +1,8 @@
-import { classNames, isRecord } from './classnames';
+import { classNames, isRecord } from "./classnames";
 
-export interface BlockFn {
-  (...mods: any): string;
-}
+export type BlockFn = (...mods: any) => string
 
-export interface ElemFn {
-  (elem: string, ...mods: any): string;
-}
+export type ElemFn = (elem: string, ...mods: any) => string
 
 /**
  * Applies mods to the specified element.
