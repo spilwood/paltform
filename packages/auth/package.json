@@ -20,11 +20,11 @@
   "dependencies": {
     "@spilwood/config": "workspace:*",
     "@spilwood/db": "workspace:*",
-    "better-auth": "1.4.6",
-    "zod": "4.1.13"
+    "better-auth": "1.4.10",
+    "zod": "4.3.4"
   },
   "devDependencies": {
-    "@better-auth/cli": "1.4.6",
+    "@better-auth/cli": "1.4.10",
     "@spilwood/tsconfig": "workspace:*",
     "typescript": "5.9.3"
   }

@@ -22,10 +22,10 @@
     "@spilwood/auth": "workspace:*",
     "@spilwood/db": "workspace:*",
     "@spilwood/validators": "workspace:*",
-    "@trpc/server": "^11.7.2",
-    "better-auth": "1.4.6",
+    "@trpc/server": "^11.8.1",
+    "better-auth": "1.4.10",
     "superjson": "2.2.6",
-    "zod": "4.1.13"
+    "zod": "4.3.4"
   },
   "devDependencies": {
     "@spilwood/tsconfig": "workspace:*",
