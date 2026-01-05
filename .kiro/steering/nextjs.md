@@ -37,9 +37,16 @@ Data Fetching:
 Best Practices:
 
 - Colocate components with routes when specific
-- NEVER create _components folders inside route directories
+- NEVER create \_components folders inside route directories
 - Use route groups ((folder)) for layout organization without URL changes
 - Optimize metadata for SEO
+
+UI Components:
+
+- ALWAYS use UI components from @spilwood/ui package
+- Import components: `import { Button, Input, ... } from "@spilwood/ui"`
+- NEVER create custom implementations of components that exist in @spilwood/ui
+- Check @spilwood/ui exports before creating new UI primitives
 
 Component Size:
 

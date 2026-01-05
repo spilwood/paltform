@@ -1,116 +1,171 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Spinner } from "@/components/ui/spinner"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "@/components/ui/input-otp"
-import { Separator } from "@/components/ui/separator"
-import { useAuth } from "@/lib/store/auth"
-import { AlertCircle, Mail, Lock, ArrowLeft, CheckCircle2 } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { AlertCircle, ArrowLeft, CheckCircle2, Lock, Mail } from "lucide-react";
 
-type LoginMethod = "password" | "otp"
-type OTPStep = "email" | "verify"
+import { authClient } from "~/auth/client";
+import {
+  loginSchema,
+  otpEmailSchema,
+  otpVerifySchema,
+  type LoginInput,
+  type OtpEmailInput,
+} from "~/lib/validations/auth";
+
+import { Alert, AlertDescription } from "~/components/ui/alert";
+import { Button } from "~/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "~/components/ui/input-otp";
+import { Separator } from "~/components/ui/separator";
+import { Spinner } from "~/components/ui/spinner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+
+type OTPStep = "email" | "verify";
 
 export function LoginForm() {
-  const router = useRouter()
-  const { login, sendOTP, verifyOTP } = useAuth()
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [otpStep, setOtpStep] = useState<OTPStep>("email");
+  const [otpEmail, setOtpEmail] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
 
-  // Shared state
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
+  const passwordForm = useForm<LoginInput>({
+    resolver: standardSchemaResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    },
+  });
 
-  // Password login state
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const otpForm = useForm<OtpEmailInput>({
+    resolver: standardSchemaResolver(otpEmailSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
 
-  // OTP login state
-  const [otpEmail, setOtpEmail] = useState("")
-  const [otpCode, setOtpCode] = useState("")
-  const [otpStep, setOtpStep] = useState<OTPStep>("email")
-  const [demoCode, setDemoCode] = useState("")
+  const handlePasswordLogin = async (data: LoginInput) => {
+    setError("");
 
-  const handlePasswordLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setIsLoading(true)
+    const result = await authClient.signIn.email({
+      email: data.email,
+      password: data.password,
+      rememberMe: data.rememberMe,
+    });
 
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    if (!email || !password) {
-      setError("Заполните все поля")
-      setIsLoading(false)
-      return
+    if (result.error) {
+      setError(result.error.message ?? "Ошибка входа");
+      return;
     }
 
-    const result = login(email, password)
-    if (result.success) {
-      router.push("/account")
-    } else {
-      setError(result.error || "Ошибка входа")
-    }
-    setIsLoading(false)
-  }
+    router.push("/account");
+    router.refresh();
+  };
 
-  const handleSendOTP = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setSuccess("")
-    setIsLoading(true)
+  const handleSendOTP = async (data: OtpEmailInput) => {
+    setError("");
+    setSuccess("");
 
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    const result = await authClient.emailOtp.sendVerificationOtp({
+      email: data.email,
+      type: "sign-in",
+    });
 
-    if (!otpEmail) {
-      setError("Введите email")
-      setIsLoading(false)
-      return
+    if (result.error) {
+      setError(result.error.message ?? "Ошибка отправки кода");
+      return;
     }
 
-    const result = sendOTP(otpEmail, "login")
-    if (result.success) {
-      setDemoCode(result.code || "")
-      setSuccess(`Код отправлен на ${otpEmail}`)
-      setOtpStep("verify")
-    } else {
-      setError(result.error || "Ошибка отправки кода")
-    }
-    setIsLoading(false)
-  }
+    setOtpEmail(data.email);
+    setSuccess(`Код отправлен на ${data.email}`);
+    setOtpStep("verify");
+  };
 
   const handleVerifyOTP = async (code: string) => {
-    if (code.length !== 6) return
+    if (code.length !== 6) return;
 
-    setError("")
-    setSuccess("")
-    setIsLoading(true)
+    setError("");
+    setSuccess("");
+    setIsVerifying(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
-    const result = verifyOTP(otpEmail, code)
-    if (result.success) {
-      router.push("/account")
-    } else {
-      setError(result.error || "Ошибка верификации")
-      setOtpCode("")
+    const parseResult = otpVerifySchema.safeParse({
+      email: otpEmail,
+      otp: code,
+    });
+    if (!parseResult.success) {
+      setError(parseResult.error.issues[0]?.message ?? "Неверный код");
+      setOtpCode("");
+      setIsVerifying(false);
+      return;
     }
-    setIsLoading(false)
-  }
+
+    const result = await authClient.emailOtp.verifyEmail({
+      email: otpEmail,
+      otp: code,
+    });
+
+    if (result.error) {
+      setError(result.error.message ?? "Неверный код");
+      setOtpCode("");
+      setIsVerifying(false);
+      return;
+    }
+
+    router.push("/account");
+    router.refresh();
+  };
 
   const handleBackToEmail = () => {
-    setOtpStep("email")
-    setOtpCode("")
-    setError("")
-    setSuccess("")
-    setDemoCode("")
-  }
+    setOtpStep("email");
+    setOtpCode("");
+    setError("");
+    setSuccess("");
+  };
+
+  const handleResendOTP = async () => {
+    if (!otpEmail) return;
+    setError("");
+    setSuccess("");
+
+    const result = await authClient.emailOtp.sendVerificationOtp({
+      email: otpEmail,
+      type: "sign-in",
+    });
+
+    if (result.error) {
+      setError(result.error.message ?? "Ошибка отправки кода");
+      return;
+    }
+
+    setSuccess("Код отправлен повторно");
+  };
 
   return (
     <Card className="w-full max-w-md">
@@ -120,150 +175,202 @@ export function LoginForm() {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="password" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsList className="mb-6 grid w-full grid-cols-2">
             <TabsTrigger value="password" className="gap-2">
-              <Lock className="h-4 w-4" />
+              <Lock className="size-4" />
               Пароль
             </TabsTrigger>
             <TabsTrigger value="otp" className="gap-2">
-              <Mail className="h-4 w-4" />
+              <Mail className="size-4" />
               Код на email
             </TabsTrigger>
           </TabsList>
 
-          {/* Password Login Tab */}
           <TabsContent value="password">
-            <form onSubmit={handlePasswordLogin} className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="email@example.com"
-                  autoComplete="email"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Пароль</Label>
-                  <Link
-                    href="/account/forgot-password"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    Забыли пароль?
-                  </Link>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  autoComplete="current-password"
-                />
-              </div>
-
-              <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <Spinner className="mr-2" />
-                    Вход...
-                  </>
-                ) : (
-                  "Войти"
-                )}
-              </Button>
-            </form>
-          </TabsContent>
-
-          {/* OTP Login Tab */}
-          <TabsContent value="otp">
-            {otpStep === "email" ? (
-              <form onSubmit={handleSendOTP} className="space-y-4">
+            <Form {...passwordForm}>
+              <form
+                onSubmit={passwordForm.handleSubmit(handlePasswordLogin)}
+                className="space-y-4"
+              >
                 {error && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
+                  <Alert variant="destructive" role="alert" aria-live="polite">
+                    <AlertCircle className="size-4" />
                     <AlertDescription>{error}</AlertDescription>
                   </Alert>
                 )}
 
-                <div className="space-y-2">
-                  <Label htmlFor="otp-email">Email</Label>
-                  <Input
-                    id="otp-email"
-                    type="email"
-                    value={otpEmail}
-                    onChange={(e) => setOtpEmail(e.target.value)}
-                    placeholder="email@example.com"
-                    autoComplete="email"
-                  />
-                  <p className="text-xs text-muted-foreground">Мы отправим одноразовый код для входа</p>
-                </div>
+                <FormField
+                  control={passwordForm.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="email@example.com…"
+                          autoComplete="email"
+                          spellCheck={false}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                  {isLoading ? (
+                <FormField
+                  control={passwordForm.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel>Пароль</FormLabel>
+                        <Link
+                          href="/auth/forgot-password"
+                          className="text-muted-foreground hover:text-primary text-sm transition-colors"
+                        >
+                          Забыли пароль?
+                        </Link>
+                      </div>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="••••••••"
+                          autoComplete="current-password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  type="submit"
+                  className="w-full"
+                  size="lg"
+                  disabled={passwordForm.formState.isSubmitting}
+                >
+                  {passwordForm.formState.isSubmitting ? (
                     <>
                       <Spinner className="mr-2" />
-                      Отправка...
+                      Вход…
                     </>
                   ) : (
-                    "Получить код"
+                    "Войти"
                   )}
                 </Button>
               </form>
+            </Form>
+          </TabsContent>
+
+          <TabsContent value="otp">
+            {otpStep === "email" ? (
+              <Form {...otpForm}>
+                <form
+                  onSubmit={otpForm.handleSubmit(handleSendOTP)}
+                  className="space-y-4"
+                >
+                  {error && (
+                    <Alert
+                      variant="destructive"
+                      role="alert"
+                      aria-live="polite"
+                    >
+                      <AlertCircle className="size-4" />
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                  )}
+
+                  <FormField
+                    control={otpForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            placeholder="email@example.com…"
+                            autoComplete="email"
+                            spellCheck={false}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                        <p className="text-muted-foreground text-xs">
+                          Мы отправим одноразовый код для входа
+                        </p>
+                      </FormItem>
+                    )}
+                  />
+
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    size="lg"
+                    disabled={otpForm.formState.isSubmitting}
+                  >
+                    {otpForm.formState.isSubmitting ? (
+                      <>
+                        <Spinner className="mr-2" />
+                        Отправка…
+                      </>
+                    ) : (
+                      "Получить код"
+                    )}
+                  </Button>
+                </form>
+              </Form>
             ) : (
               <div className="space-y-4">
-                <Button variant="ghost" size="sm" onClick={handleBackToEmail} className="gap-2 -ml-2">
-                  <ArrowLeft className="h-4 w-4" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleBackToEmail}
+                  className="-ml-2 gap-2"
+                >
+                  <ArrowLeft className="size-4" />
                   Изменить email
                 </Button>
 
                 {error && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
+                  <Alert variant="destructive" role="alert" aria-live="polite">
+                    <AlertCircle className="size-4" />
                     <AlertDescription>{error}</AlertDescription>
                   </Alert>
                 )}
 
                 {success && (
-                  <Alert className="border-primary/20 bg-primary/5">
-                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                    <AlertDescription className="text-foreground">{success}</AlertDescription>
-                  </Alert>
-                )}
-
-                {/* Demo code display - remove in production */}
-                {demoCode && (
-                  <Alert className="border-amber-500/20 bg-amber-500/5">
-                    <AlertDescription className="text-amber-700 dark:text-amber-400">
-                      Демо-код: <span className="font-mono font-bold">{demoCode}</span>
+                  <Alert
+                    className="border-primary/20 bg-primary/5"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    <CheckCircle2 className="text-primary size-4" />
+                    <AlertDescription className="text-foreground">
+                      {success}
                     </AlertDescription>
                   </Alert>
                 )}
 
                 <div className="space-y-3">
-                  <Label>Введите 6-значный код</Label>
+                  <p className="text-sm font-medium" id="otp-label">
+                    Введите 6-значный код
+                  </p>
                   <div className="flex justify-center">
                     <InputOTP
                       maxLength={6}
                       value={otpCode}
                       onChange={(value) => {
-                        setOtpCode(value)
+                        setOtpCode(value);
                         if (value.length === 6) {
-                          handleVerifyOTP(value)
+                          handleVerifyOTP(value);
                         }
                       }}
-                      disabled={isLoading}
+                      disabled={isVerifying}
+                      aria-labelledby="otp-label"
                     >
                       <InputOTPGroup>
                         <InputOTPSlot index={0} />
@@ -278,20 +385,22 @@ export function LoginForm() {
                       </InputOTPGroup>
                     </InputOTP>
                   </div>
-                  <p className="text-xs text-muted-foreground text-center">Код действителен 5 минут</p>
+                  <p className="text-muted-foreground text-center text-xs">
+                    Код действителен 5 минут
+                  </p>
                 </div>
 
-                {isLoading && (
+                {isVerifying && (
                   <div className="flex justify-center">
-                    <Spinner className="h-6 w-6" />
+                    <Spinner className="size-6" />
                   </div>
                 )}
 
                 <Button
                   variant="link"
-                  className="w-full text-muted-foreground"
-                  onClick={handleSendOTP}
-                  disabled={isLoading}
+                  className="text-muted-foreground w-full"
+                  onClick={handleResendOTP}
+                  disabled={isVerifying}
                 >
                   Отправить код повторно
                 </Button>
@@ -302,13 +411,16 @@ export function LoginForm() {
 
         <Separator className="my-6" />
 
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-center text-sm">
           Нет аккаунта?{" "}
-          <Link href="/account/register" className="font-medium text-primary underline-offset-4 hover:underline">
+          <Link
+            href="/auth/register"
+            className="text-primary font-medium underline-offset-4 hover:underline"
+          >
             Зарегистрироваться
           </Link>
         </p>
       </CardContent>
     </Card>
-  )
+  );
 }

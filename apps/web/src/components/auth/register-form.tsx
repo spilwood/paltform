@@ -1,141 +1,190 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Spinner } from "@/components/ui/spinner"
-import { useAuth } from "@/lib/store/auth"
-import { AlertCircle } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { AlertCircle } from "lucide-react";
+
+import { authClient } from "~/auth/client";
+import { registerSchema, type RegisterInput } from "~/lib/validations/auth";
+
+import { Alert, AlertDescription } from "~/components/ui/alert";
+import { Button } from "~/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+import { Spinner } from "~/components/ui/spinner";
 
 export function RegisterForm() {
-  const router = useRouter()
-  const { register } = useAuth()
-  const [isLoading, setIsLoading] = useState(false)
-  const [fullName, setFullName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const router = useRouter();
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
+  const form = useForm<RegisterInput>({
+    resolver: standardSchemaResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
 
-    if (!fullName || !email || !password) {
-      setError("Заполните все поля")
-      return
+  const handleSubmit = async (data: RegisterInput) => {
+    setError("");
+
+    const result = await authClient.signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
+
+    if (result.error) {
+      setError(result.error.message ?? "Ошибка регистрации");
+      return;
     }
 
-    if (password.length < 8) {
-      setError("Пароль должен быть не менее 8 символов")
-      return
-    }
-
-    setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    const result = register(email, password, fullName)
-
-    if (result.success) {
-      router.push("/account")
-    } else {
-      setError(result.error || "Ошибка регистрации")
-    }
-    setIsLoading(false)
-  }
+    router.push("/account");
+    router.refresh();
+  };
 
   return (
     <Card className="w-full max-w-lg">
       <CardHeader className="text-center">
         <CardTitle className="text-xl">Создайте аккаунт</CardTitle>
-        <CardDescription>Введите email для создания аккаунта</CardDescription>
+        <CardDescription>Введите данные для создания аккаунта</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <FieldGroup>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-5"
+          >
             {error && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
+              <Alert variant="destructive" role="alert" aria-live="polite">
+                <AlertCircle className="size-4" />
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
 
-            <Field>
-              <FieldLabel htmlFor="fullName">Имя и фамилия</FieldLabel>
-              <Input
-                id="fullName"
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="Иван Иванов"
-                required
-                autoComplete="name"
-              />
-            </Field>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Имя и фамилия</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Иван Иванов…"
+                      autoComplete="name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="m@example.com"
-                required
-                autoComplete="email"
-              />
-            </Field>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="email@example.com…"
+                      autoComplete="email"
+                      spellCheck={false}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <Field>
-              <FieldLabel htmlFor="password">Пароль</FieldLabel>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="new-password"
-              />
-              <FieldDescription>Минимум 8 символов</FieldDescription>
-            </Field>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Пароль</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="••••••••"
+                      autoComplete="new-password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>Минимум 8 символов</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <Field>
-              <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <Spinner className="mr-2" />
-                    Создание...
-                  </>
-                ) : (
-                  "Создать аккаунт"
-                )}
-              </Button>
-              <FieldDescription className="text-center">
-                Уже есть аккаунт?{" "}
-                <Link href="/account/login" className="font-medium text-primary hover:underline">
-                  Войти
-                </Link>
-              </FieldDescription>
-            </Field>
-          </FieldGroup>
-        </form>
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? (
+                <>
+                  <Spinner className="mr-2" />
+                  Создание…
+                </>
+              ) : (
+                "Создать аккаунт"
+              )}
+            </Button>
+
+            <p className="text-muted-foreground text-center text-sm">
+              Уже есть аккаунт?{" "}
+              <Link
+                href="/auth/login"
+                className="text-primary font-medium hover:underline"
+              >
+                Войти
+              </Link>
+            </p>
+          </form>
+        </Form>
       </CardContent>
-      <FieldDescription className="px-6 pb-6 text-center">
+      <p className="text-muted-foreground px-6 pb-6 text-center text-sm">
         Нажимая продолжить, вы соглашаетесь с{" "}
-        <Link href="/oferta" className="font-medium text-primary hover:underline">
+        <Link
+          href="/oferta"
+          className="text-primary font-medium hover:underline"
+        >
           условиями оферты
         </Link>{" "}
         и{" "}
-        <Link href="/politika" className="font-medium text-primary hover:underline">
+        <Link
+          href="/politika"
+          className="text-primary font-medium hover:underline"
+        >
           политикой конфиденциальности
         </Link>
         .
-      </FieldDescription>
+      </p>
     </Card>
-  )
+  );
 }

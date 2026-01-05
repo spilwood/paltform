@@ -1,15 +1,13 @@
-import { Suspense } from "react";
 import { GalleryVerticalEnd } from "lucide-react";
 
-import { OTPForm } from "~/components/auth";
-import { Spinner } from "~/components/ui/spinner";
+import { ForgotPasswordForm } from "~/components/auth";
 
 export const metadata = {
-  title: "Подтверждение",
-  description: "Введите код подтверждения",
+  title: "Восстановление пароля",
+  description: "Восстановите доступ к аккаунту",
 };
 
-export default function OTPPage() {
+export default function ForgotPasswordPage() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-md flex-col gap-6">
@@ -19,15 +17,7 @@ export default function OTPPage() {
           </div>
           Spilwood
         </a>
-        <Suspense
-          fallback={
-            <div className="flex justify-center py-8">
-              <Spinner className="size-6" />
-            </div>
-          }
-        >
-          <OTPForm />
-        </Suspense>
+        <ForgotPasswordForm />
       </div>
     </div>
   );

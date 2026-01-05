@@ -1,68 +1,79 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { SiteHeader } from "@/components/site-header"
-import { SiteFooter } from "@/components/site-footer"
-import { Breadcrumbs } from "@/components/breadcrumbs"
-import { ProductCard } from "@/components/catalog/product-card"
-import { ProductCardSkeleton } from "@/components/catalog/product-card-skeleton"
-import { ProductFilters, type FilterState } from "@/components/catalog/product-filters"
-import { CompareDrawer } from "@/components/catalog/compare-drawer"
-import { getProductsByCategory, type Product } from "@/lib/data/products"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { SlidersHorizontal } from "lucide-react"
+import { useState, useEffect } from "react";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { ProductCard } from "@/components/catalog/product-card";
+import { ProductCardSkeleton } from "@/components/catalog/product-card-skeleton";
+import {
+  ProductFilters,
+  type FilterState,
+} from "@/components/catalog/product-filters";
+import { getProductsByCategory, type Product } from "@/lib/data/products";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { SlidersHorizontal } from "lucide-react";
 
 function filterProducts(products: Product[], filters: FilterState): Product[] {
   return products.filter((product) => {
-    if (filters.inStockOnly && !product.inStock) return false
-    if (product.price < filters.priceRange[0] || product.price > filters.priceRange[1]) return false
+    if (filters.inStockOnly && !product.inStock) return false;
+    if (
+      product.price < filters.priceRange[0] ||
+      product.price > filters.priceRange[1]
+    )
+      return false;
 
     if (filters.diameter.length > 0) {
-      const d = product.diameter
+      const d = product.diameter;
       const matchesDiameter = filters.diameter.some((size) => {
-        if (size === "small") return d >= 10 && d <= 15
-        if (size === "medium") return d >= 16 && d <= 25
-        if (size === "large") return d >= 26 && d <= 35
-        if (size === "xlarge") return d >= 36
-        return true
-      })
-      if (!matchesDiameter) return false
+        if (size === "small") return d >= 10 && d <= 15;
+        if (size === "medium") return d >= 16 && d <= 25;
+        if (size === "large") return d >= 26 && d <= 35;
+        if (size === "xlarge") return d >= 36;
+        return true;
+      });
+      if (!matchesDiameter) return false;
     }
 
-    return true
-  })
+    return true;
+  });
 }
 
 export default function PenkiPage() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [products, setProducts] = useState<Product[]>([])
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [filters, setFilters] = useState<FilterState>({
     woodType: [],
     diameter: [],
     priceRange: [0, 1000],
     inStockOnly: false,
-  })
+  });
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const timer = setTimeout(() => {
-      const categoryProducts = getProductsByCategory("penki")
-      setProducts(categoryProducts)
-      setFilteredProducts(categoryProducts)
-      setIsLoading(false)
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [])
+      const categoryProducts = getProductsByCategory("penki");
+      setProducts(categoryProducts);
+      setFilteredProducts(categoryProducts);
+      setIsLoading(false);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
-    setFilteredProducts(filterProducts(products, filters))
-  }, [filters, products])
+    setFilteredProducts(filterProducts(products, filters));
+  }, [filters, products]);
 
   const handleFilterChange = (newFilters: FilterState) => {
-    setFilters(newFilters)
-  }
+    setFilters(newFilters);
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -73,15 +84,21 @@ export default function PenkiPage() {
 
           <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <h1 className="text-4xl font-light tracking-tight md:text-5xl">Декоративные пеньки</h1>
+              <h1 className="text-4xl font-light tracking-tight md:text-5xl">
+                Декоративные пеньки
+              </h1>
               <p className="mt-4 max-w-xl text-muted-foreground">
-                Натуральные берёзовые пеньки для интерьера, свадеб и мероприятий.
+                Натуральные берёзовые пеньки для интерьера, свадеб и
+                мероприятий.
               </p>
             </div>
 
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" className="w-full gap-2 md:hidden bg-transparent">
+                <Button
+                  variant="outline"
+                  className="w-full gap-2 md:hidden bg-transparent"
+                >
                   <SlidersHorizontal className="h-4 w-4" />
                   Фильтры
                 </Button>
@@ -89,7 +106,10 @@ export default function PenkiPage() {
               <SheetContent side="left" className="px-6">
                 <SheetTitle>Фильтры</SheetTitle>
                 <div className="mt-6">
-                  <ProductFilters onFilterChange={handleFilterChange} showWoodType={false} />
+                  <ProductFilters
+                    onFilterChange={handleFilterChange}
+                    showWoodType={false}
+                  />
                 </div>
               </SheetContent>
             </Sheet>
@@ -98,24 +118,37 @@ export default function PenkiPage() {
           <div className="mt-12 grid gap-12 lg:grid-cols-[240px_1fr]">
             <aside className="hidden lg:block">
               <div className="sticky top-24">
-                <h2 className="mb-6 text-sm font-medium uppercase tracking-widest text-muted-foreground">Фильтры</h2>
-                <ProductFilters onFilterChange={handleFilterChange} showWoodType={false} />
+                <h2 className="mb-6 text-sm font-medium uppercase tracking-widest text-muted-foreground">
+                  Фильтры
+                </h2>
+                <ProductFilters
+                  onFilterChange={handleFilterChange}
+                  showWoodType={false}
+                />
               </div>
             </aside>
 
             <div>
               <div className="mb-4 text-sm text-muted-foreground">
-                {isLoading ? "Загрузка..." : `Найдено: ${filteredProducts.length}`}
+                {isLoading
+                  ? "Загрузка..."
+                  : `Найдено: ${filteredProducts.length}`}
               </div>
 
               <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
                 {isLoading ? (
-                  Array.from({ length: 6 }).map((_, i) => <ProductCardSkeleton key={i} />)
+                  Array.from({ length: 6 }).map((_, i) => (
+                    <ProductCardSkeleton key={i} />
+                  ))
                 ) : filteredProducts.length > 0 ? (
-                  filteredProducts.map((product) => <ProductCard key={product.id} product={product} />)
+                  filteredProducts.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))
                 ) : (
                   <div className="col-span-full py-12 text-center">
-                    <p className="text-muted-foreground">Товары не найдены. Попробуйте изменить фильтры.</p>
+                    <p className="text-muted-foreground">
+                      Товары не найдены. Попробуйте изменить фильтры.
+                    </p>
                   </div>
                 )}
               </div>
@@ -124,22 +157,27 @@ export default function PenkiPage() {
 
           {/* SEO Text */}
           <section className="mt-24 border-t border-border pt-16">
-            <h2 className="text-2xl font-light tracking-tight">Пеньки для декора и интерьера</h2>
+            <h2 className="text-2xl font-light tracking-tight">
+              Пеньки для декора и интерьера
+            </h2>
             <div className="mt-6 max-w-2xl space-y-4 text-muted-foreground">
               <p className="leading-relaxed">
-                Декоративные пеньки из берёзы — универсальный элемент для создания уютной атмосферы в доме или на
-                мероприятии. Их используют как подставки для цветов и свечей, табуреты, прикроватные столики.
+                Декоративные пеньки из берёзы — универсальный элемент для
+                создания уютной атмосферы в доме или на мероприятии. Их
+                используют как подставки для цветов и свечей, табуреты,
+                прикроватные столики.
               </p>
               <p className="leading-relaxed">
-                Каждый пенёк обработан и готов к использованию. Натуральная кора придаёт рустикальный шарм, а ровные
-                срезы обеспечивают устойчивость. Идеально для свадебного декора, фотозон и эко-интерьеров.
+                Каждый пенёк обработан и готов к использованию. Натуральная кора
+                придаёт рустикальный шарм, а ровные срезы обеспечивают
+                устойчивость. Идеально для свадебного декора, фотозон и
+                эко-интерьеров.
               </p>
             </div>
           </section>
         </div>
       </main>
       <SiteFooter />
-      <CompareDrawer />
     </div>
-  )
+  );
 }
