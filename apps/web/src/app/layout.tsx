@@ -1,63 +1,66 @@
-import { cn, ThemeProvider, ThemeToggle, Toaster } from "@spilwood/ui";
-import { Analytics } from "@vercel/analytics/next";
-import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { env } from "~/env";
-import { TRPCReactProvider } from "~/trpc/react";
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter, Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import { ThemeProvider } from "@/components/theme-provider"
+import { OrganizationJsonLd } from "@/components/organization-json-ld"
+import { CompareDrawer } from "@/components/catalog/compare-drawer"
+import { Toaster } from "@/components/ui/sonner"
+import "./globals.css"
 
-import "~/app/styles.css";
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-sans",
+})
 
-export const metadata: Metadata = {
-  metadataBase: new URL(
-    env.VERCEL_ENV === "production"
-      ? "https://turbo.t3.gg"
-      : "http://localhost:3000",
-  ),
-  title: "Bun Turbo Starter",
-  description: "Simple monorepo with shared backend for web & mobile apps",
-  openGraph: {
-    title: "Bun Turbo Starter",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://bun-turbo-starter.vercel.app",
-    siteName: "Bun Turbo Starter",
-  },
-};
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-};
-
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-});
 const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-geist-mono",
-});
+  variable: "--font-mono",
+})
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export const metadata: Metadata = {
+  title: "Spilwood — Спилы и пеньки из берёзы и сосны от производителя",
+  description:
+    "Производство спилов дерева в Тверской области. Готовые спилы для декора, мастерских и интерьеров. Доставка по России через Ozon.",
+  keywords: "спилы дерева, пеньки, спилы берёзы, спилы сосны, декор из дерева, деревянные спилы купить",
+  metadataBase: new URL("https://spilwood.ru"),
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    siteName: "Spilwood",
+    title: "Spilwood — Спилы и пеньки от производителя",
+    description: "Производство спилов дерева в Тверской области. Берёза и сосна. Доставка по России.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Spilwood — Спилы и пеньки от производителя",
+    description: "Производство спилов дерева в Тверской области. Берёза и сосна.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+    generator: 'v0.app'
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "bg-background text-foreground min-h-screen font-sans antialiased",
-          geistSans.variable,
-          geistMono.variable,
-        )}
-      >
-        <ThemeProvider>
-          <TRPCReactProvider>{props.children}</TRPCReactProvider>
-          <div className="absolute right-4 bottom-4">
-            <ThemeToggle />
-          </div>
-          <Toaster />
+    <html lang="ru" suppressHydrationWarning>
+      <head>
+        <OrganizationJsonLd />
+      </head>
+      <body className={`${inter.className} ${geistMono.variable} font-sans antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {children}
+          <CompareDrawer />
+          <Toaster position="bottom-right" richColors closeButton />
         </ThemeProvider>
         <Analytics />
       </body>
     </html>
-  );
+  )
 }
