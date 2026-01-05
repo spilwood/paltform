@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@telegram-apps/telegram-ui": "^2.1.13",
-    "@tma.js/sdk-react": "^3.0.13",
+    "@tma.js/sdk-react": "^3.0.14",
     "@tonconnect/ui-react": "^2.3.1",
     "eruda": "^3.4.3",
     "next": "16.1.1",
-    "next-intl": "^4.6.1",
+    "next-intl": "^4.7.0",
     "normalize.css": "^8.0.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"

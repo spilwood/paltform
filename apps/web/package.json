@@ -24,7 +24,7 @@
     "@spilwood/ui": "workspace:*",
     "@spilwood/validators": "workspace:*",
     "@t3-oss/env-nextjs": "0.13.10",
-    "@tabler/icons-react": "^3.36.0",
+    "@tabler/icons-react": "^3.36.1",
     "@tanstack/react-form": "^1.27.7",
     "@tanstack/react-query": "^5.90.16",
     "@tanstack/react-table": "^8.21.3",
@@ -40,7 +40,7 @@
     "react-dom": "19.2.3",
     "recharts": "2.15.4",
     "superjson": "2.2.6",
-    "zod": "4.3.4"
+    "zod": "4.3.5"
   },
   "devDependencies": {
     "@spilwood/tailwind-config": "workspace:*",
