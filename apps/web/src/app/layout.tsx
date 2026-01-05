@@ -64,6 +64,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <a href="#main-content" className="skip-to-content">
+            Перейти к содержимому
+          </a>
           {children}
           <Toaster position="bottom-right" richColors closeButton />
         </ThemeProvider>

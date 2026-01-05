@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useState } from "react"
+import Link from "next/link";
+import { useState } from "react";
 import {
   Menu,
   User,
@@ -14,25 +14,38 @@ import {
   Layers,
   TreeDeciduous,
   LogIn,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
-import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
-import { CartSheet } from "@/components/cart/cart-sheet"
-import { MegaMenu } from "@/components/mega-menu"
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { useCart } from "@/lib/store/cart"
-import { useAuth } from "@/lib/store/auth"
-import Image from "next/image"
-import { useIsMobile } from "@/hooks/use-mobile"
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { CartSheet } from "@/components/cart/cart-sheet";
+import { MegaMenu } from "@/components/mega-menu";
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from "@/components/ui/hover-card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useCart } from "@/lib/store/cart";
+import { useAuth } from "@/lib/store/auth";
+import Image from "next/image";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function SiteHeader() {
-  const [open, setOpen] = useState(false)
-  const { cart, itemCount } = useCart()
-  const { user } = useAuth()
-  const isMobile = useIsMobile()
+  const [open, setOpen] = useState(false);
+  const { cart, itemCount } = useCart();
+  const { user } = useAuth();
+  const isMobile = useIsMobile();
 
   const AccountMenuContent = () => (
     <div className="space-y-1">
@@ -44,7 +57,9 @@ export function SiteHeader() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{user.name}</p>
-              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+              <p className="text-xs text-muted-foreground truncate">
+                {user.email}
+              </p>
             </div>
           </div>
           <Link
@@ -92,7 +107,7 @@ export function SiteHeader() {
         </>
       )}
     </div>
-  )
+  );
 
   const CartPreviewContent = () => (
     <>
@@ -103,14 +118,18 @@ export function SiteHeader() {
           </div>
           <div>
             <p className="text-sm font-medium">Корзина пуста</p>
-            <p className="text-xs text-muted-foreground mt-1">Добавьте товары из каталога</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Добавьте товары из каталога
+            </p>
           </div>
         </div>
       ) : (
         <div className="space-y-3">
           <div className="flex items-center justify-between pb-2 border-b">
             <p className="text-sm font-medium">Корзина</p>
-            <span className="text-xs text-muted-foreground">{itemCount} товаров</span>
+            <span className="text-xs text-muted-foreground">
+              {itemCount} товаров
+            </span>
           </div>
           <div className="space-y-3 max-h-64 overflow-y-auto">
             {cart.items.slice(0, 3).map((item) => (
@@ -124,24 +143,32 @@ export function SiteHeader() {
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{item.product.name}</p>
+                  <p className="text-sm font-medium truncate">
+                    {item.product.name}
+                  </p>
                   <p className="text-xs text-muted-foreground">
-                    {item.quantity} шт × {item.product.price.toLocaleString("ru-RU")} ₽
+                    {item.quantity} шт ×{" "}
+                    {item.product.price.toLocaleString("ru-RU")} ₽
                   </p>
                 </div>
                 <div className="text-sm font-medium">
-                  {(item.product.price * item.quantity).toLocaleString("ru-RU")} ₽
+                  {(item.product.price * item.quantity).toLocaleString("ru-RU")}{" "}
+                  ₽
                 </div>
               </div>
             ))}
             {cart.items.length > 3 && (
-              <p className="text-xs text-muted-foreground text-center pt-2">И ещё {cart.items.length - 3} товаров...</p>
+              <p className="text-xs text-muted-foreground text-center pt-2">
+                И ещё {cart.items.length - 3} товаров...
+              </p>
             )}
           </div>
           <Separator />
           <div className="flex items-center justify-between pt-1">
             <span className="text-sm font-medium">Итого:</span>
-            <span className="text-base font-semibold">{cart.total.toLocaleString("ru-RU")} ₽</span>
+            <span className="text-base font-semibold">
+              {cart.total.toLocaleString("ru-RU")} ₽
+            </span>
           </div>
           <Button asChild className="w-full mt-3">
             <Link href="/checkout">Оформить заказ</Link>
@@ -149,7 +176,7 @@ export function SiteHeader() {
         </div>
       )}
     </>
-  )
+  );
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -161,8 +188,17 @@ export function SiteHeader() {
         <MegaMenu />
 
         <div className="flex items-center gap-1">
-          <Button variant="ghost" size="icon" className="hidden md:flex" asChild>
-            <a href="https://t.me/spilwood_bot" target="_blank" rel="noopener noreferrer">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hidden md:flex"
+            asChild
+          >
+            <a
+              href="https://t.me/spilwood_bot"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Send className="h-5 w-5" />
               <span className="sr-only">Telegram магазин</span>
             </a>
@@ -171,28 +207,48 @@ export function SiteHeader() {
           {isMobile ? (
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" className="hidden md:flex" asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hidden md:flex"
+                  asChild
+                >
                   <div>
                     <User className="h-5 w-5" />
                     <span className="sr-only">Аккаунт</span>
                   </div>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent side="bottom" align="end" className="w-64 p-3" sideOffset={8}>
+              <PopoverContent
+                side="bottom"
+                align="end"
+                className="w-64 p-3"
+                sideOffset={8}
+              >
                 <AccountMenuContent />
               </PopoverContent>
             </Popover>
           ) : (
             <HoverCard openDelay={200} closeDelay={100}>
               <HoverCardTrigger asChild>
-                <Button variant="ghost" size="icon" className="hidden md:flex" asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hidden md:flex"
+                  asChild
+                >
                   <Link href="/account">
                     <User className="h-5 w-5" />
                     <span className="sr-only">Аккаунт</span>
                   </Link>
                 </Button>
               </HoverCardTrigger>
-              <HoverCardContent side="bottom" align="end" className="w-64 p-3" sideOffset={8}>
+              <HoverCardContent
+                side="bottom"
+                align="end"
+                className="w-64 p-3"
+                sideOffset={8}
+              >
                 <AccountMenuContent />
               </HoverCardContent>
             </HoverCard>
@@ -203,17 +259,29 @@ export function SiteHeader() {
           ) : (
             <HoverCard openDelay={200} closeDelay={100}>
               <HoverCardTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative" asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative"
+                  asChild
+                >
                   <Link href="/checkout">
                     <ShoppingCart className="h-5 w-5" />
                     {itemCount > 0 && (
-                      <Badge className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs">{itemCount}</Badge>
+                      <Badge className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 text-xs">
+                        {itemCount}
+                      </Badge>
                     )}
                     <span className="sr-only">Корзина</span>
                   </Link>
                 </Button>
               </HoverCardTrigger>
-              <HoverCardContent side="bottom" align="end" className="w-80 p-4" sideOffset={8}>
+              <HoverCardContent
+                side="bottom"
+                align="end"
+                className="w-80 p-4"
+                sideOffset={8}
+              >
                 <CartPreviewContent />
               </HoverCardContent>
             </HoverCard>
@@ -226,14 +294,21 @@ export function SiteHeader() {
                 <span className="sr-only">Открыть меню</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full sm:w-[400px] px-0 flex flex-col">
+            <SheetContent
+              side="right"
+              className="w-full sm:w-[400px] px-0 flex flex-col overscroll-contain"
+            >
               <SheetTitle className="sr-only">Меню навигации</SheetTitle>
 
               {/* Mobile Menu Header */}
               <div className="flex items-center justify-between border-b px-6 pb-4 flex-shrink-0">
                 <div>
-                  <h2 className="text-2xl font-semibold tracking-tight">Spilwood</h2>
-                  <p className="text-sm text-muted-foreground">Деревянные изделия</p>
+                  <h2 className="text-2xl font-semibold tracking-tight">
+                    Spilwood
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Деревянные изделия
+                  </p>
                 </div>
                 <Button
                   variant="ghost"
@@ -261,7 +336,11 @@ export function SiteHeader() {
               </div>
 
               {/* Navigation Links - Scrollable */}
-              <nav className="flex-1 overflow-y-auto px-3 py-6 pb-48" role="navigation" aria-label="Основная навигация">
+              <nav
+                className="flex-1 overflow-y-auto px-3 py-6 pb-48"
+                role="navigation"
+                aria-label="Основная навигация"
+              >
                 <div className="space-y-1">
                   <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     Каталог
@@ -376,5 +455,5 @@ export function SiteHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

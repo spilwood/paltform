@@ -166,12 +166,14 @@ export const ProductCard = memo(function ProductCard({
           </h3>
         </Link>
         <div className="mt-1 flex items-center gap-3 text-sm text-muted-foreground">
-          <span>⌀ {product.diameter} см</span>
-          <span className="h-1 w-1 rounded-full bg-border" />
-          <span>{product.thickness} см</span>
+          <span>⌀&nbsp;{product.diameter}&nbsp;см</span>
+          <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
+          <span>{product.thickness}&nbsp;см</span>
         </div>
         <div className="mt-3 flex items-center justify-between">
-          <span className="text-lg font-semibold">{product.price} ₽</span>
+          <span className="text-lg font-semibold tabular-nums">
+            {product.price}&nbsp;₽
+          </span>
           {hasMultipleImages && (
             <span className="text-xs text-muted-foreground">
               {images.length} фото

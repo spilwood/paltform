@@ -1,9 +1,10 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, Send, MapPin, Truck, TreePine, Star } from "lucide-react"
-import { ScrollAnimation } from "@/components/scroll-animation"
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowRight, Send, MapPin, Truck, TreePine, Star } from "lucide-react";
+import { ScrollAnimation } from "@/components/scroll-animation";
 
 export function HeroSection() {
   return (
@@ -15,7 +16,10 @@ export function HeroSection() {
           {/* Left column - Content */}
           <div className="max-w-2xl">
             <ScrollAnimation>
-              <Badge variant="secondary" className="mb-6 gap-1.5 px-3 py-1.5 text-sm font-medium">
+              <Badge
+                variant="secondary"
+                className="mb-6 gap-1.5 px-3 py-1.5 text-sm font-medium"
+              >
                 <MapPin className="h-3.5 w-3.5" />
                 Тверская область, Зубцовский район
               </Badge>
@@ -24,14 +28,17 @@ export function HeroSection() {
             <ScrollAnimation delay={100}>
               <h1 className="text-balance text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl">
                 Спилы и пеньки
-                <span className="block text-muted-foreground">от производителя</span>
+                <span className="block text-muted-foreground">
+                  от производителя
+                </span>
               </h1>
             </ScrollAnimation>
 
             <ScrollAnimation delay={150}>
               <p className="mt-6 max-w-lg text-pretty text-base text-muted-foreground md:text-lg">
-                Натуральные спилы берёзы и сосны для декора, творчества и интерьера. Собственное производство с
-                контролем качества на каждом этапе.
+                Натуральные спилы берёзы и сосны для декора, творчества и
+                интерьера. Собственное производство с контролем качества на
+                каждом этапе.
               </p>
             </ScrollAnimation>
 
@@ -43,8 +50,17 @@ export function HeroSection() {
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="gap-2 bg-transparent" asChild>
-                  <a href="https://t.me/spilwood_bot" target="_blank" rel="noopener noreferrer">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="gap-2 bg-transparent"
+                  asChild
+                >
+                  <a
+                    href="https://t.me/spilwood_bot"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Send className="h-4 w-4" />
                     Telegram
                   </a>
@@ -57,7 +73,10 @@ export function HeroSection() {
                 <div className="flex items-center gap-2">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-primary text-primary"
+                      />
                     ))}
                   </div>
                   <span>500+ отзывов</span>
@@ -76,10 +95,13 @@ export function HeroSection() {
               <div className="grid gap-4 sm:grid-cols-2">
                 {/* Main image card */}
                 <div className="sm:col-span-2 aspect-[16/9] overflow-hidden rounded-xl">
-                  <img
+                  <Image
                     src="/hero-wood-slices-stumps-birch-pine.jpg"
-                    alt="Спилы березы и сосны, пеньки - продукция Spilwood"
+                    alt="Спилы березы и сосны, пеньки — продукция Spilwood"
+                    width={800}
+                    height={450}
                     className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                    priority
                   />
                 </div>
 
@@ -91,7 +113,9 @@ export function HeroSection() {
                     </div>
                     <div>
                       <h3 className="font-medium">Берёза и сосна</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">Два вида древесины для любых задач</p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Два вида древесины для любых задач
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
@@ -104,7 +128,9 @@ export function HeroSection() {
                     </div>
                     <div>
                       <h3 className="font-medium">Ozon доставка</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">Быстрая отправка по всей России</p>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Быстрая отправка по всей России
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
@@ -116,5 +142,5 @@ export function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,25 +1,31 @@
-"use client"
+"use client";
 
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { ShoppingBag, Minus, Plus, X, ArrowRight } from "lucide-react"
-import { useCart } from "@/lib/store/cart"
-import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ShoppingBag, Minus, Plus, X, ArrowRight } from "lucide-react";
+import { useCart } from "@/lib/store/cart";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
   visible: { opacity: 1, y: 0, scale: 1 },
   exit: { opacity: 0, x: -100, scale: 0.9 },
-}
+};
 
 export function CartSheet() {
-  const { cart, itemCount, updateQuantity, removeItem } = useCart()
-  const [open, setOpen] = useState(false)
+  const { cart, itemCount, updateQuantity, removeItem } = useCart();
+  const [open, setOpen] = useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -37,10 +43,13 @@ export function CartSheet() {
           <span className="sr-only">Корзина</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex w-full flex-col px-4 sm:px-6 sm:max-w-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-right-1/2 data-[state=open]:slide-in-from-right-1/2 data-[state=closed]:duration-300 data-[state=open]:duration-500">
+      <SheetContent className="flex w-full flex-col px-4 sm:px-6 sm:max-w-lg overscroll-contain data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:slide-out-to-right-1/2 data-[state=open]:slide-in-from-right-1/2 data-[state=closed]:duration-300 data-[state=open]:duration-500">
         <SheetHeader>
           <SheetTitle className="text-lg font-medium">
-            Корзина {itemCount > 0 && <span className="text-muted-foreground">({itemCount})</span>}
+            Корзина{" "}
+            {itemCount > 0 && (
+              <span className="text-muted-foreground">({itemCount})</span>
+            )}
           </SheetTitle>
         </SheetHeader>
         <Separator className="my-4" />
@@ -52,7 +61,9 @@ export function CartSheet() {
             </div>
             <div className="animate-in slide-in-from-bottom-4 duration-500 delay-300">
               <p className="text-lg font-medium">Корзина пуста</p>
-              <p className="mt-1 text-sm text-muted-foreground">Добавьте товары из каталога</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Добавьте товары из каталога
+              </p>
             </div>
             <Button
               variant="outline"
@@ -84,9 +95,12 @@ export function CartSheet() {
                     <div className="flex flex-1 flex-col">
                       <div className="flex justify-between">
                         <div>
-                          <h3 className="text-sm font-medium">{item.product.name}</h3>
+                          <h3 className="text-sm font-medium">
+                            {item.product.name}
+                          </h3>
                           <p className="mt-1 text-xs text-muted-foreground">
-                            {item.product.diameter} см / {item.product.thickness} см
+                            {item.product.diameter}&nbsp;см /{" "}
+                            {item.product.thickness}&nbsp;см
                           </p>
                         </div>
                         <Button
@@ -105,7 +119,9 @@ export function CartSheet() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 rounded-none rounded-l-md transition-colors"
-                            onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                            onClick={() =>
+                              updateQuantity(item.product.id, item.quantity - 1)
+                            }
                           >
                             <Minus className="h-3 w-3" />
                             <span className="sr-only">Уменьшить</span>
@@ -120,7 +136,9 @@ export function CartSheet() {
                             variant="ghost"
                             size="icon"
                             className="h-8 w-8 rounded-none rounded-r-md transition-colors"
-                            onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                            onClick={() =>
+                              updateQuantity(item.product.id, item.quantity + 1)
+                            }
                           >
                             <Plus className="h-3 w-3" />
                             <span className="sr-only">Увеличить</span>
@@ -128,9 +146,12 @@ export function CartSheet() {
                         </div>
                         <span
                           key={`price-${item.product.id}-${item.quantity}`}
-                          className="text-sm font-medium animate-in zoom-in-95 duration-300"
+                          className="text-sm font-medium tabular-nums animate-in zoom-in-95 duration-300"
                         >
-                          {(item.product.price * item.quantity).toLocaleString("ru-RU")} ₽
+                          {(item.product.price * item.quantity).toLocaleString(
+                            "ru-RU"
+                          )}
+                          &nbsp;₽
                         </span>
                       </div>
                     </div>
@@ -143,11 +164,16 @@ export function CartSheet() {
             <div className="animate-in slide-in-from-bottom-4 duration-500 delay-300">
               <div className="flex items-center justify-between text-lg">
                 <span>Итого</span>
-                <span key={`total-${cart.total}`} className="font-semibold animate-in zoom-in-95 duration-300">
-                  {cart.total.toLocaleString("ru-RU")} ₽
+                <span
+                  key={`total-${cart.total}`}
+                  className="font-semibold tabular-nums animate-in zoom-in-95 duration-300"
+                >
+                  {cart.total.toLocaleString("ru-RU")}&nbsp;₽
                 </span>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">Без учёта доставки</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Без учёта доставки
+              </p>
               <Button
                 className="mt-6 w-full transition-transform hover:scale-[1.02]"
                 size="lg"
@@ -164,5 +190,5 @@ export function CartSheet() {
         )}
       </SheetContent>
     </Sheet>
-  )
+  );
 }
