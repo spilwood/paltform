@@ -10,7 +10,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@spilwood/ui"
 import { cn } from "@/lib/utils"
 import { TreeDeciduous, TreePine, Layers, Palette, Clock, UtensilsCrossed } from "lucide-react"
 

@@ -8,22 +8,21 @@ import { AlertCircle, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { authClient } from "~/auth/client";
 import { otpVerifySchema } from "~/lib/validations/auth";
 
-import { Alert, AlertDescription } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
 import {
+  Alert,
+  AlertDescription,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
-import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "~/components/ui/input-otp";
-import { Spinner } from "~/components/ui/spinner";
+  Spinner,
+} from "@spilwood/ui";
 
 export function OTPForm() {
   const router = useRouter();

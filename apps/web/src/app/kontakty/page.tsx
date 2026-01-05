@@ -1,7 +1,7 @@
 import { Breadcrumbs } from "@/components/breadcrumbs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
+import { Card, CardContent, CardHeader, CardTitle } from "@spilwood/ui"
+import { Button } from "@spilwood/ui"
+import { Separator } from "@spilwood/ui"
 import { MapPin, Mail, Phone, Clock, Send } from "lucide-react"
 
 export const metadata = {

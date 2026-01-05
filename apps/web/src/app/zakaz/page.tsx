@@ -8,7 +8,7 @@ import { CustomOrderBenefits } from "@/components/order/custom-order-benefits"
 import { CustomOrderFAQ } from "@/components/order/custom-order-faq"
 import { OrderCalculator } from "@/components/order/order-calculator"
 import { SmartCalculator } from "@/components/ai/smart-calculator"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@spilwood/ui"
 
 export const metadata: Metadata = {
   title: "Индивидуальный заказ | Spilwood",

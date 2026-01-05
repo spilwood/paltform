@@ -1,7 +1,7 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent } from "@spilwood/ui"
+import { Avatar, AvatarFallback, AvatarImage } from "@spilwood/ui"
 import { Star } from "lucide-react"
 import { getRecentReviews, getAverageRating } from "@/lib/data/reviews"
 

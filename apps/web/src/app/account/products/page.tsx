@@ -4,17 +4,17 @@ import { useAuth } from "@/lib/store/auth"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AccountNav } from "@/components/account/account-nav"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
+import { Button } from "@spilwood/ui"
+import { Card, CardContent } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
+import { Input } from "@spilwood/ui"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
+} from "@spilwood/ui"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,7 +24,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from "@spilwood/ui"
 import Link from "next/link"
 import Image from "next/image"
 import { Plus, Search, MoreVertical, Edit, Trash2, Eye, Package } from "lucide-react"

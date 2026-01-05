@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@spilwood/ui"
 import { useCart } from "@/lib/store/cart"
 import type { Product } from "@/lib/data/products"
 import { ShoppingBag, Check } from "lucide-react"

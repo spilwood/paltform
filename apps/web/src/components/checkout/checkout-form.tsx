@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Spinner } from "@/components/ui/spinner";
+import { Button } from "@spilwood/ui";
+import { Input } from "@spilwood/ui";
+import { Label } from "@spilwood/ui";
+import { Textarea } from "@spilwood/ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@spilwood/ui";
+import { Separator } from "@spilwood/ui";
+import { Spinner } from "@spilwood/ui";
 import { useCart } from "@/lib/store/cart";
 import { useOrders, type ShippingAddress } from "@/lib/store/orders";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";

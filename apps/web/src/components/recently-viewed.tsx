@@ -2,7 +2,7 @@
 
 import { useRecentlyViewed } from "@/lib/store/recently-viewed"
 import { ProductCard } from "@/components/catalog/product-card"
-import { Button } from "@/components/ui/button"
+import { Button } from "@spilwood/ui"
 import { X } from "lucide-react"
 
 export function RecentlyViewed() {

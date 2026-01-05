@@ -6,11 +6,11 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from "@spilwood/ui";
+import { Button } from "@spilwood/ui";
+import { Separator } from "@spilwood/ui";
+import { Badge } from "@spilwood/ui";
+import { ScrollArea } from "@spilwood/ui";
 import { ShoppingBag, Minus, Plus, X, ArrowRight } from "lucide-react";
 import { useCart } from "@/lib/store/cart";
 import Image from "next/image";

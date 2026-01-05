@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { AccountNav } from "@/components/account/account-nav"
 import { OrderCard } from "@/components/orders/order-card"
-import { Button } from "@/components/ui/button"
+import { Button } from "@spilwood/ui"
 import Link from "next/link"
 import { Package } from "lucide-react"
 

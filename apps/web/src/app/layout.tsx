@@ -4,7 +4,7 @@ import { Inter, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { OrganizationJsonLd } from "@/components/organization-json-ld";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@spilwood/ui";
 import "./globals.css";
 
 const inter = Inter({

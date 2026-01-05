@@ -16,33 +16,33 @@ import {
   type OtpEmailInput,
 } from "~/lib/validations/auth";
 
-import { Alert, AlertDescription } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
 import {
+  Alert,
+  AlertDescription,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
-import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import {
+  Input,
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "~/components/ui/input-otp";
-import { Separator } from "~/components/ui/separator";
-import { Spinner } from "~/components/ui/spinner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+  Separator,
+  Spinner,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@spilwood/ui";
 
 type OTPStep = "email" | "verify";
 

@@ -16,9 +16,9 @@ import {
   Calendar,
   Filter,
 } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@spilwood/ui"
+import { Button } from "@spilwood/ui"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@spilwood/ui"
 import {
   AreaChart,
   Area,

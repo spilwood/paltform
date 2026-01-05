@@ -18,8 +18,8 @@ import {
 } from "lucide-react"
 import { useAuth } from "@/lib/store/auth"
 import { useRouter } from "next/navigation"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+import { Badge } from "@spilwood/ui"
+import { Separator } from "@spilwood/ui"
 
 const buyerNavItems = [
   { name: "Обзор", href: "/account", icon: LayoutDashboard },

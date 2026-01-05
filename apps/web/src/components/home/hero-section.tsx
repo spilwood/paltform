@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@spilwood/ui";
+import { Badge } from "@spilwood/ui";
+import { Card, CardContent } from "@spilwood/ui";
 import { ArrowRight, Send, MapPin, Truck, TreePine, Star } from "lucide-react";
 import { ScrollAnimation } from "@/components/scroll-animation";
 

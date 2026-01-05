@@ -15,27 +15,27 @@ import {
   TreeDeciduous,
   LogIn,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@spilwood/ui";
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
+} from "@spilwood/ui";
+import { Separator } from "@spilwood/ui";
+import { Badge } from "@spilwood/ui";
 import { CartSheet } from "@/components/cart/cart-sheet";
 import { MegaMenu } from "@/components/mega-menu";
 import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
-} from "@/components/ui/hover-card";
+} from "@spilwood/ui";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@spilwood/ui";
 import { useCart } from "@/lib/store/cart";
 import { useAuth } from "@/lib/store/auth";
 import Image from "next/image";

@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { Switch } from "@/components/ui/switch"
-import { Slider } from "@/components/ui/slider"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@spilwood/ui"
+import { Label } from "@spilwood/ui"
+import { Separator } from "@spilwood/ui"
+import { ToggleGroup, ToggleGroupItem } from "@spilwood/ui"
+import { Switch } from "@spilwood/ui"
+import { Slider } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
 import { X } from "lucide-react"
 
 interface FilterProps {

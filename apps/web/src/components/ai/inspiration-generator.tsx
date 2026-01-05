@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@spilwood/ui"
+import { Card, CardContent, CardHeader, CardTitle } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
 import { Sparkles, Clock, Lightbulb, Loader2, ImageIcon, Wand2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 

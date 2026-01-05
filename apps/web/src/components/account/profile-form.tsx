@@ -3,9 +3,9 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Button } from "@spilwood/ui"
+import { Input } from "@spilwood/ui"
+import { Label } from "@spilwood/ui"
 import { useAuth } from "@/lib/store/auth"
 import { Check, Loader2 } from "lucide-react"
 

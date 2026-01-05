@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@spilwood/ui";
+import { Badge } from "@spilwood/ui";
+import { AspectRatio } from "@spilwood/ui";
 import {
   ChevronLeft,
   ChevronRight,

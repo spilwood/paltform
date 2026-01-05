@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@spilwood/ui"
 import { ScrollAnimation } from "@/components/scroll-animation"
 import { ExternalLink } from "lucide-react"
 

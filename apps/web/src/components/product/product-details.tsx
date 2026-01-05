@@ -1,7 +1,7 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@spilwood/ui"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
+import { Separator } from "@spilwood/ui"
 import { Check, X, Info, Truck, Shield, Leaf } from "lucide-react"
 import type { Product } from "@/lib/data/products"
 

@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Separator } from "@/components/ui/separator"
-import { Button } from "@/components/ui/button"
+import { Separator } from "@spilwood/ui"
+import { Button } from "@spilwood/ui"
 import { Send } from "lucide-react"
 
 const footerLinks = {

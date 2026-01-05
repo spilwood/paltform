@@ -1,7 +1,7 @@
 import Link from "next/link"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@spilwood/ui"
+import { Card, CardContent } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
 import { ArrowUpRight, MapPin, FolderOpen } from "lucide-react"
 import type { Master } from "@/lib/data/masters"
 

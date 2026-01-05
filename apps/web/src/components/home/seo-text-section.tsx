@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@spilwood/ui"
 import { ScrollAnimation } from "@/components/scroll-animation"
 
 export function SeoTextSection() {

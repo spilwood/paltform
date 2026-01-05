@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { AspectRatio } from "@spilwood/ui"
 import { Play } from "lucide-react"
 import Image from "next/image"
 

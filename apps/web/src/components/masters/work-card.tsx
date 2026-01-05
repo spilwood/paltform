@@ -1,8 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@spilwood/ui"
+import { Card, CardContent, CardFooter } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
 import { ArrowUpRight } from "lucide-react"
 import type { MasterWork, Master } from "@/lib/data/masters"
 

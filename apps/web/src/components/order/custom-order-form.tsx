@@ -1,29 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@spilwood/ui";
+import { Input } from "@spilwood/ui";
+import { Label } from "@spilwood/ui";
+import { Textarea } from "@spilwood/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
-} from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Slider } from "@/components/ui/slider";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Spinner } from "@/components/ui/spinner";
+} from "@spilwood/ui";
+import { RadioGroup, RadioGroupItem } from "@spilwood/ui";
+import { Slider } from "@spilwood/ui";
+import { Separator } from "@spilwood/ui";
+import { Badge } from "@spilwood/ui";
+import { Alert, AlertDescription } from "@spilwood/ui";
+import { Spinner } from "@spilwood/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@spilwood/ui";
 import {
   Check,
   TreePine,

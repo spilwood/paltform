@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Breadcrumbs } from "@/components/breadcrumbs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
+import { Card, CardContent, CardHeader, CardTitle } from "@spilwood/ui"
+import { Separator } from "@spilwood/ui"
 
 export const metadata = {
   title: "Публичная оферта — Spilwood",

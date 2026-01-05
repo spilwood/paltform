@@ -3,8 +3,8 @@
 import type React from "react"
 
 import { useState, useCallback, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { Button } from "@spilwood/ui"
+import { Dialog, DialogContent, DialogTitle } from "@spilwood/ui"
 import { cn } from "@/lib/utils"
 import { ZoomIn, ZoomOut, X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react"
 import Image from "next/image"

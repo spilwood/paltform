@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
 import { ArrowRight, Ruler, Palette, Clock, Heart, Sparkles } from "lucide-react"
 import { ScrollAnimation } from "@/components/scroll-animation"
 

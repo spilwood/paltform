@@ -4,9 +4,9 @@ import { useRef, useState, useCallback } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Card, CardContent } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
+import { AspectRatio } from "@spilwood/ui"
 import type { BlogPost } from "@/lib/data/blog"
 
 interface BlogCardProps {

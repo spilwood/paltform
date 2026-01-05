@@ -4,9 +4,9 @@ import { Truck, Package, Shield, Minus, Plus } from "lucide-react"
 import type { Product } from "@/lib/data/products"
 import { AddToCartButton } from "@/components/cart/add-to-cart-button"
 import { useState } from "react"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Button } from "@/components/ui/button"
+import { Badge } from "@spilwood/ui"
+import { Separator } from "@spilwood/ui"
+import { Button } from "@spilwood/ui"
 
 interface ProductInfoProps {
   product: Product

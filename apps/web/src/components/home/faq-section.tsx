@@ -1,6 +1,6 @@
 "use client"
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@spilwood/ui"
 import { ScrollAnimation } from "@/components/scroll-animation"
 
 const faqs = [

@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Card, CardContent } from "@spilwood/ui"
+import { Skeleton } from "@spilwood/ui"
+import { AspectRatio } from "@spilwood/ui"
 
 export function ProductCardSkeleton() {
   return (

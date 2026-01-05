@@ -1,7 +1,7 @@
 import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Badge } from "@spilwood/ui"
+import { Card, CardContent } from "@spilwood/ui"
+import { AspectRatio } from "@spilwood/ui"
 import { ArrowUpRight } from "lucide-react"
 import { ScrollAnimation } from "@/components/scroll-animation"
 

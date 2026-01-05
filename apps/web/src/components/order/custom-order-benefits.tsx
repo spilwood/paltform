@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@spilwood/ui"
 import { Ruler, Truck, Shield, Leaf, Clock, HeartHandshake } from "lucide-react"
 
 const benefits = [

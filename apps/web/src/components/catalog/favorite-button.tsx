@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@spilwood/ui"
 import { Heart } from "lucide-react"
 import { useFavorites } from "@/lib/store/favorites"
 import type { Product } from "@/lib/data/products"

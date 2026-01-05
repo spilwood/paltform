@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react"
 import { ScrollAnimation } from "@/components/scroll-animation"
-import { Card } from "@/components/ui/card"
+import { Card } from "@spilwood/ui"
 import { TreeDeciduous, Users, Truck, Star } from "lucide-react"
 
 const stats = [

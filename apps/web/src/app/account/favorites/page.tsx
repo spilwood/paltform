@@ -4,12 +4,12 @@ import { useAuth } from "@/lib/store/auth"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { AccountNav } from "@/components/account/account-nav"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@spilwood/ui"
+import { Card, CardContent } from "@spilwood/ui"
 import { Heart, ShoppingCart } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { AspectRatio } from "@spilwood/ui"
 
 // Mock favorites data
 const mockFavorites = [

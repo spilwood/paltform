@@ -11,13 +11,13 @@ import {
   type FilterState,
 } from "@/components/catalog/product-filters";
 import type { Product } from "@/lib/data/products";
-import { Button } from "@/components/ui/button";
+import { Button } from "@spilwood/ui";
 import {
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@spilwood/ui";
 import { SlidersHorizontal } from "lucide-react";
 
 interface CategoryPageClientProps {

@@ -12,25 +12,24 @@ import {
   type ForgotPasswordInput,
 } from "~/lib/validations/auth";
 
-import { Alert, AlertDescription } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
 import {
+  Alert,
+  AlertDescription,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
-import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Spinner } from "~/components/ui/spinner";
+  Input,
+  Spinner,
+} from "@spilwood/ui";
 
 export function ForgotPasswordForm() {
   const [error, setError] = useState("");

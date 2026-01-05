@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@spilwood/ui"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
 import { cn } from "@/lib/utils"
 
 interface SizeData {

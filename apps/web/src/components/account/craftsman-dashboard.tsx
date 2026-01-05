@@ -16,12 +16,12 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Progress } from "@/components/ui/progress"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "@spilwood/ui"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@spilwood/ui"
+import { Badge } from "@spilwood/ui"
+import { Avatar, AvatarFallback, AvatarImage } from "@spilwood/ui"
+import { Progress } from "@spilwood/ui"
+import { Separator } from "@spilwood/ui"
 import { useAuth, type User } from "@/lib/store/auth"
 
 interface CraftsmanDashboardProps {

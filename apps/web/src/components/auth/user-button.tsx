@@ -17,8 +17,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  Skeleton,
 } from "@spilwood/ui";
-import { Skeleton } from "~/components/ui/skeleton";
 
 export function UserButton() {
   const router = useRouter();

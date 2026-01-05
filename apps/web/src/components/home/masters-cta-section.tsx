@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Button } from "@spilwood/ui"
+import { AspectRatio } from "@spilwood/ui"
 import { ArrowRight, Check } from "lucide-react"
 import { ScrollAnimation } from "@/components/scroll-animation"
 

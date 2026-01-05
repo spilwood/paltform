@@ -10,16 +10,15 @@ import { AlertCircle } from "lucide-react";
 import { authClient } from "~/auth/client";
 import { registerSchema, type RegisterInput } from "~/lib/validations/auth";
 
-import { Alert, AlertDescription } from "~/components/ui/alert";
-import { Button } from "~/components/ui/button";
 import {
+  Alert,
+  AlertDescription,
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
-import {
   Form,
   FormControl,
   FormDescription,
@@ -27,9 +26,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Spinner } from "~/components/ui/spinner";
+  Input,
+  Spinner,
+} from "@spilwood/ui";
 
 export function RegisterForm() {
   const router = useRouter();

@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { GalleryVerticalEnd } from "lucide-react";
 
 import { OTPForm } from "~/components/auth";
-import { Spinner } from "~/components/ui/spinner";
+import { Spinner } from "@spilwood/ui";
 
 export const metadata = {
   title: "Подтверждение",
