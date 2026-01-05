@@ -1,26 +1,33 @@
-import { SiteHeader } from "@/components/site-header"
-import { SiteFooter } from "@/components/site-footer"
-import { Breadcrumbs } from "@/components/breadcrumbs"
-import { BlogCard } from "@/components/blog/blog-card"
-import { Badge } from "@spilwood/ui"
-import { Separator } from "@spilwood/ui"
-import { Card, CardContent } from "@spilwood/ui"
-import { Button } from "@spilwood/ui"
-import { Clock, Calendar, User, Share2, BookOpen, ChevronLeft, ChevronRight } from "lucide-react"
-import { blogPosts, getBlogPostBySlug, getRelatedPosts } from "@/lib/data/blog"
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import Image from "next/image"
-import type { Metadata } from "next"
+import { Badge, Button, Card, CardContent, Separator } from "@spilwood/ui";
+import {
+  BookOpen,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Share2,
+  User,
+} from "lucide-react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { BlogCard } from "@/components/blog/blog-card";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { blogPosts, getBlogPostBySlug, getRelatedPosts } from "@/lib/data/blog";
 
 interface BlogPostPageProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = await params
-  const post = getBlogPostBySlug(slug)
-  if (!post) return { title: "Статья не найдена" }
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
+  if (!post) return { title: "Статья не найдена" };
 
   return {
     title: `${post.title} | Блог Spilwood`,
@@ -33,46 +40,54 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       publishedTime: post.publishedAt,
       authors: [post.author || "Spilwood"],
     },
-  }
+  };
 }
 
 export async function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }))
+  return blogPosts.map((post) => ({ slug: post.slug }));
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params
-  const post = getBlogPostBySlug(slug)
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
 
-  if (!post) notFound()
+  if (!post) notFound();
 
-  const relatedPosts = getRelatedPosts(slug)
+  const relatedPosts = getRelatedPosts(slug);
   const formattedDate = new Date(post.publishedAt).toLocaleDateString("ru-RU", {
     day: "numeric",
     month: "long",
     year: "numeric",
-  })
+  });
 
   // Get previous and next posts for navigation
-  const currentIndex = blogPosts.findIndex((p) => p.slug === slug)
-  const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null
-  const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null
+  const currentIndex = blogPosts.findIndex((p) => p.slug === slug);
+  const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
+  const nextPost =
+    currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
 
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">
         <article className="mx-auto max-w-7xl px-4 py-8">
-          <Breadcrumbs items={[{ label: "Блог", href: "/blog" }, { label: post.title }]} />
+          <Breadcrumbs
+            items={[{ label: "Блог", href: "/blog" }, { label: post.title }]}
+          />
 
           <header className="mx-auto mt-8 max-w-4xl text-center">
-            <Badge variant="secondary" className="mb-6 px-4 py-1.5 text-sm font-medium">
+            <Badge
+              variant="secondary"
+              className="mb-6 px-4 py-1.5 text-sm font-medium"
+            >
               {post.category}
             </Badge>
             <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
               {post.title}
             </h1>
-            <p className="mt-8 text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl">{post.excerpt}</p>
+            <p className="mt-8 text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl">
+              {post.excerpt}
+            </p>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
               {post.author && (
@@ -90,14 +105,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {post.readTime} мин чтения
               </span>
               <span className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4" />~{Math.round(post.content.length / 1500)} страниц
+                <BookOpen className="h-4 w-4" />~
+                {Math.round(post.content.length / 1500)} страниц
               </span>
             </div>
 
             {post.tags && post.tags.length > 0 && (
               <div className="mt-8 flex flex-wrap justify-center gap-2">
                 {post.tags.map((tag) => (
-                  <Badge key={tag} variant="outline" className="px-3 py-1 text-xs font-normal">
+                  <Badge
+                    key={tag}
+                    variant="outline"
+                    className="px-3 py-1 text-xs font-normal"
+                  >
                     #{tag}
                   </Badge>
                 ))}
@@ -155,7 +175,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     <Share2 className="h-5 w-5 text-primary" />
                     <p className="text-xl font-semibold">Понравилась статья?</p>
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground">Поделитесь с друзьями в социальных сетях</p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Поделитесь с друзьями в социальных сетях
+                  </p>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
@@ -167,7 +189,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     <Share2 className="mr-2 h-4 w-4" />
                     Поделиться
                   </Button>
-                  <Button variant="outline" size="lg" className="transition-all hover:scale-105 bg-transparent">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="transition-all hover:scale-105 bg-transparent"
+                  >
                     Сохранить
                   </Button>
                 </div>
@@ -226,8 +252,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {relatedPosts.length > 0 && (
           <section className="mx-auto max-w-7xl px-4 pb-20">
             <div className="text-center">
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Читайте также</h2>
-              <p className="mt-3 text-lg text-muted-foreground">Похожие статьи, которые могут вас заинтересовать</p>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+                Читайте также
+              </h2>
+              <p className="mt-3 text-lg text-muted-foreground">
+                Похожие статьи, которые могут вас заинтересовать
+              </p>
             </div>
             <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {relatedPosts.map((p) => (
@@ -240,9 +270,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <section className="relative overflow-hidden border-t bg-gradient-to-br from-muted/50 via-muted/30 to-background py-20">
           <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
           <div className="relative mx-auto max-w-3xl px-4 text-center">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Готовы начать свой проект?</h2>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+              Готовы начать свой проект?
+            </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              В нашем каталоге вы найдёте качественные спилы для любых творческих идей
+              В нашем каталоге вы найдёте качественные спилы для любых
+              творческих идей
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Button asChild size="lg" className="shadow-lg">
@@ -257,5 +290,5 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </main>
       <SiteFooter />
     </div>
-  )
+  );
 }
