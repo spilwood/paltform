@@ -1,46 +1,60 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useCallback, useRef, useEffect } from "react"
-import { Button } from "@spilwood/ui"
-import { Dialog, DialogContent, DialogTitle } from "@spilwood/ui"
-import { cn } from "@/lib/utils"
-import { ZoomIn, ZoomOut, X, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react"
-import Image from "next/image"
+import { useState, useCallback, useRef, useEffect } from "react";
+import { Button } from "@spilwood/ui";
+import { Dialog, DialogContent, DialogTitle } from "@spilwood/ui";
+import { cn } from "@/lib/utils";
+import {
+  ZoomIn,
+  ZoomOut,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+} from "lucide-react";
+import Image from "next/image";
 
 interface ProductGalleryProps {
-  images: string[]
-  productName: string
+  images: string[];
+  productName: string;
 }
 
 export function ProductGallery({ images, productName }: ProductGalleryProps) {
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [isZoomOpen, setIsZoomOpen] = useState(false)
-  const [zoomLevel, setZoomLevel] = useState(1)
-  const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [isDragging, setIsDragging] = useState(false)
-  const dragStart = useRef({ x: 0, y: 0 })
-  const imageRef = useRef<HTMLDivElement>(null)
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStart = useRef({ x: 0, y: 0 });
+  const imageRef = useRef<HTMLDivElement>(null);
 
-  const displayImages = images.length > 0 ? images : ["/wood-slice-natural-texture.jpg"]
+  const displayImages =
+    images.length > 0 ? images : ["/wood-slice-natural-texture.jpg"];
 
-  const handleZoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.5, 4))
-  const handleZoomOut = () => {
-    setZoomLevel((prev) => Math.max(prev - 0.5, 1))
-    if (zoomLevel <= 1.5) setPosition({ x: 0, y: 0 })
-  }
-  const handleResetZoom = () => {
-    setZoomLevel(1)
-    setPosition({ x: 0, y: 0 })
-  }
+  const handleZoomIn = useCallback(
+    () => setZoomLevel((prev) => Math.min(prev + 0.5, 4)),
+    []
+  );
+  const handleZoomOut = useCallback(() => {
+    setZoomLevel((prev) => Math.max(prev - 0.5, 1));
+    if (zoomLevel <= 1.5) setPosition({ x: 0, y: 0 });
+  }, [zoomLevel]);
+  const handleResetZoom = useCallback(() => {
+    setZoomLevel(1);
+    setPosition({ x: 0, y: 0 });
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (zoomLevel > 1) {
-      setIsDragging(true)
-      dragStart.current = { x: e.clientX - position.x, y: e.clientY - position.y }
+      setIsDragging(true);
+      dragStart.current = {
+        x: e.clientX - position.x,
+        y: e.clientY - position.y,
+      };
     }
-  }
+  };
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -48,31 +62,40 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
         setPosition({
           x: e.clientX - dragStart.current.x,
           y: e.clientY - dragStart.current.y,
-        })
+        });
       }
     },
-    [isDragging, zoomLevel],
-  )
+    [isDragging, zoomLevel]
+  );
 
-  const handleMouseUp = () => setIsDragging(false)
+  const handleMouseUp = () => setIsDragging(false);
 
-  const nextImage = () => setSelectedIndex((prev) => (prev + 1) % displayImages.length)
-  const prevImage = () => setSelectedIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length)
+  const nextImage = useCallback(
+    () => setSelectedIndex((prev) => (prev + 1) % displayImages.length),
+    [displayImages.length]
+  );
+  const prevImage = useCallback(
+    () =>
+      setSelectedIndex(
+        (prev) => (prev - 1 + displayImages.length) % displayImages.length
+      ),
+    [displayImages.length]
+  );
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isZoomOpen) {
-        if (e.key === "ArrowRight") nextImage()
-        if (e.key === "ArrowLeft") prevImage()
-        if (e.key === "Escape") setIsZoomOpen(false)
-        if (e.key === "+" || e.key === "=") handleZoomIn()
-        if (e.key === "-") handleZoomOut()
+        if (e.key === "ArrowRight") nextImage();
+        if (e.key === "ArrowLeft") prevImage();
+        if (e.key === "Escape") setIsZoomOpen(false);
+        if (e.key === "+" || e.key === "=") handleZoomIn();
+        if (e.key === "-") handleZoomOut();
       }
-    }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [isZoomOpen])
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isZoomOpen, handleZoomIn, handleZoomOut, nextImage, prevImage]);
 
   return (
     <>
@@ -102,7 +125,9 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               variant="secondary"
               size="icon"
               className="absolute bottom-4 right-4 bg-background/90 backdrop-blur-sm"
-              onClick={() => setSelectedIndex((prev) => (prev + 1) % displayImages.length)}
+              onClick={() =>
+                setSelectedIndex((prev) => (prev + 1) % displayImages.length)
+              }
               aria-label="Следующее изображение"
             >
               <ChevronRight className="h-4 w-4" />
@@ -115,12 +140,13 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             {displayImages.map((image, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => setSelectedIndex(index)}
                 className={cn(
                   "aspect-square overflow-hidden rounded-lg bg-muted transition-all duration-200 relative",
                   selectedIndex === index
                     ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
-                    : "opacity-70 hover:opacity-100 hover:ring-1 hover:ring-border",
+                    : "opacity-70 hover:opacity-100 hover:ring-1 hover:ring-border"
                 )}
               >
                 <Image
@@ -139,14 +165,28 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
 
       <Dialog open={isZoomOpen} onOpenChange={setIsZoomOpen}>
         <DialogContent className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 bg-background/95 backdrop-blur-md border-0">
-          <DialogTitle className="sr-only">Просмотр изображения: {productName}</DialogTitle>
+          <DialogTitle className="sr-only">
+            Просмотр изображения: {productName}
+          </DialogTitle>
           {/* Controls */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 bg-background/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
-            <Button variant="ghost" size="icon" onClick={handleZoomOut} disabled={zoomLevel <= 1}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleZoomOut}
+              disabled={zoomLevel <= 1}
+            >
               <ZoomOut className="h-4 w-4" />
             </Button>
-            <span className="text-sm font-medium min-w-[3rem] text-center">{Math.round(zoomLevel * 100)}%</span>
-            <Button variant="ghost" size="icon" onClick={handleZoomIn} disabled={zoomLevel >= 4}>
+            <span className="text-sm font-medium min-w-[3rem] text-center">
+              {Math.round(zoomLevel * 100)}%
+            </span>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleZoomIn}
+              disabled={zoomLevel >= 4}
+            >
               <ZoomIn className="h-4 w-4" />
             </Button>
             <div className="w-px h-4 bg-border mx-2" />
@@ -190,6 +230,8 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           {/* Image */}
           <div
             ref={imageRef}
+            role="img"
+            aria-label={productName}
             className="w-full h-full flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -220,13 +262,22 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               {displayImages.map((image, index) => (
                 <button
                   key={index}
+                  type="button"
                   onClick={() => setSelectedIndex(index)}
                   className={cn(
                     "w-12 h-12 rounded overflow-hidden transition-all relative",
-                    selectedIndex === index ? "ring-2 ring-primary" : "opacity-60 hover:opacity-100",
+                    selectedIndex === index
+                      ? "ring-2 ring-primary"
+                      : "opacity-60 hover:opacity-100"
                   )}
                 >
-                  <Image src={image || "/placeholder.svg"} alt="" fill className="object-cover" sizes="48px" />
+                  <Image
+                    src={image || "/placeholder.svg"}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="48px"
+                  />
                 </button>
               ))}
             </div>
@@ -234,5 +285,5 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }

@@ -98,8 +98,16 @@ export const ProductCard = memo(function ProductCard({
               {images.map((_, index) => (
                 <div
                   key={index}
+                  role="button"
+                  tabIndex={0}
                   className="flex-1 cursor-pointer"
                   onMouseEnter={() => setActiveImageIndex(index)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setActiveImageIndex(index);
+                    }
+                  }}
+                  aria-label={`Показать изображение ${index + 1}`}
                 />
               ))}
             </div>

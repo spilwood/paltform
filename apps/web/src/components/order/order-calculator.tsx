@@ -285,7 +285,7 @@ export function OrderCalculator() {
               min={1}
               max={1000}
               value={state.quantity}
-              onChange={(e) => setState((s) => ({ ...s, quantity: Math.max(1, Number.parseInt(e.target.value) || 1) }))}
+              onChange={(e) => setState((s) => ({ ...s, quantity: Math.max(1, Number.parseInt(e.target.value, 10) || 1) }))}
               className="w-24 text-center font-mono"
             />
             <span className="text-sm text-muted-foreground">штук</span>

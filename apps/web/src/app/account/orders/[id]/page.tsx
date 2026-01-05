@@ -1,35 +1,35 @@
-"use client"
+"use client";
 
-import { useAuth } from "@/lib/store/auth"
-import { useOrders } from "@/lib/store/orders"
-import { useRouter, useParams } from "next/navigation"
-import { useEffect } from "react"
-import { AccountNav } from "@/components/account/account-nav"
-import { OrderStatusBadge } from "@/components/orders/order-status-badge"
-import { OrderTimeline } from "@/components/orders/order-timeline"
-import { ArrowLeft, MapPin, Phone, Mail, Copy, Check } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@spilwood/ui"
-import { useState } from "react"
+import { useAuth } from "@/lib/store/auth";
+import { useOrders } from "@/lib/store/orders";
+import { useRouter, useParams } from "next/navigation";
+import { useEffect } from "react";
+import { AccountNav } from "@/components/account/account-nav";
+import { OrderStatusBadge } from "@/components/orders/order-status-badge";
+import { OrderTimeline } from "@/components/orders/order-timeline";
+import { ArrowLeft, MapPin, Phone, Mail, Copy, Check } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@spilwood/ui";
+import { useState } from "react";
 
 export default function OrderDetailPage() {
-  const params = useParams()
-  const { isAuthenticated } = useAuth()
-  const { getOrderById } = useOrders()
-  const router = useRouter()
-  const [copied, setCopied] = useState(false)
+  const params = useParams();
+  const { isAuthenticated } = useAuth();
+  const { getOrderById } = useOrders();
+  const router = useRouter();
+  const [copied, setCopied] = useState(false);
 
-  const order = getOrderById(params.id as string)
+  const order = getOrderById(params.id as string);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/account/login")
+      router.push("/account/login");
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    return null
+    return null;
   }
 
   if (!order) {
@@ -42,14 +42,14 @@ export default function OrderDetailPage() {
           </Button>
         </div>
       </main>
-    )
+    );
   }
 
   const handleCopyOrderId = () => {
-    navigator.clipboard.writeText(order.id)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    navigator.clipboard.writeText(order.id);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
@@ -66,10 +66,15 @@ export default function OrderDetailPage() {
           <div className="flex items-center gap-3">
             <h1 className="font-mono text-2xl font-medium">{order.id}</h1>
             <button
+              type="button"
               onClick={handleCopyOrderId}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              {copied ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
             </button>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -93,12 +98,16 @@ export default function OrderDetailPage() {
         <div className="space-y-10">
           {/* Order Timeline */}
           <div className="border border-border p-6">
-            <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-muted-foreground">Статус заказа</h2>
+            <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Статус заказа
+            </h2>
             <OrderTimeline status={order.status} createdAt={order.createdAt} />
             {order.trackingNumber && (
               <div className="mt-6 pt-6 border-t border-border">
                 <p className="text-sm text-muted-foreground">Трек-номер</p>
-                <p className="mt-1 font-mono font-medium">{order.trackingNumber}</p>
+                <p className="mt-1 font-mono font-medium">
+                  {order.trackingNumber}
+                </p>
               </div>
             )}
           </div>
@@ -110,7 +119,10 @@ export default function OrderDetailPage() {
             </h2>
             <div className="space-y-4">
               {order.items.map((item) => (
-                <div key={item.product.id} className="flex gap-4 border border-border p-4">
+                <div
+                  key={item.product.id}
+                  className="flex gap-4 border border-border p-4"
+                >
                   <div className="relative h-20 w-20 flex-shrink-0 bg-muted">
                     <Image
                       src={item.product.images[0] || "/placeholder.svg"}
@@ -132,9 +144,14 @@ export default function OrderDetailPage() {
                       </p>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-muted-foreground">× {item.quantity}</span>
+                      <span className="text-sm text-muted-foreground">
+                        × {item.quantity}
+                      </span>
                       <span className="font-medium">
-                        {(item.product.price * item.quantity).toLocaleString("ru-RU")} ₽
+                        {(item.product.price * item.quantity).toLocaleString(
+                          "ru-RU"
+                        )}{" "}
+                        ₽
                       </span>
                     </div>
                   </div>
@@ -178,11 +195,14 @@ export default function OrderDetailPage() {
 
             {/* Order Total */}
             <div className="border border-border p-6">
-              <h2 className="mb-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">Сумма заказа</h2>
+              <h2 className="mb-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                Сумма заказа
+              </h2>
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">
-                    Товары ({order.items.reduce((sum, i) => sum + i.quantity, 0)} шт.)
+                    Товары (
+                    {order.items.reduce((sum, i) => sum + i.quantity, 0)} шт.)
                   </span>
                   <span>{order.total.toLocaleString("ru-RU")} ₽</span>
                 </div>
@@ -200,5 +220,5 @@ export default function OrderDetailPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }

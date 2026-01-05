@@ -270,7 +270,7 @@ export function useAuth() {
     return { success: true, type }
   }
 
-  const resetPassword = (email: string, _newPassword: string): { success: boolean; error?: string } => {
+  const resetPassword = (_email: string, _newPassword: string): { success: boolean; error?: string } => {
     return { success: true }
   }
 

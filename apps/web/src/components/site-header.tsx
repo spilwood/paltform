@@ -16,26 +16,13 @@ import {
   LogIn,
 } from "lucide-react";
 import { Button } from "@spilwood/ui";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetTitle,
-} from "@spilwood/ui";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@spilwood/ui";
 import { Separator } from "@spilwood/ui";
 import { Badge } from "@spilwood/ui";
 import { CartSheet } from "@/components/cart/cart-sheet";
 import { MegaMenu } from "@/components/mega-menu";
-import {
-  HoverCard,
-  HoverCardTrigger,
-  HoverCardContent,
-} from "@spilwood/ui";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@spilwood/ui";
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@spilwood/ui";
+import { Popover, PopoverContent, PopoverTrigger } from "@spilwood/ui";
 import { useCart } from "@/lib/store/cart";
 import { useAuth } from "@/lib/store/auth";
 import Image from "next/image";
@@ -84,7 +71,10 @@ export function SiteHeader() {
             <span>Настройки</span>
           </Link>
           <Separator className="my-1" />
-          <button className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
+          <button
+            type="button"
+            className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors"
+          >
             <LogOut className="h-4 w-4" />
             <span>Выйти</span>
           </button>
@@ -324,7 +314,10 @@ export function SiteHeader() {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4"
+                    role="img"
+                    aria-label="Close"
                   >
+                    <title>Close</title>
                     <path
                       d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z"
                       fill="currentColor"
@@ -338,7 +331,6 @@ export function SiteHeader() {
               {/* Navigation Links - Scrollable */}
               <nav
                 className="flex-1 overflow-y-auto px-3 py-6 pb-48"
-                role="navigation"
                 aria-label="Основная навигация"
               >
                 <div className="space-y-1">

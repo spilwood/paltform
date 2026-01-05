@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { OrganizationJsonLd } from "@/components/organization-json-ld";
 import { Toaster } from "@spilwood/ui";
+import { TRPCReactProvider } from "~/trpc/react";
 import "./globals.css";
 
 const inter = Inter({
@@ -58,18 +59,20 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${geistMono.variable} font-sans antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <a href="#main-content" className="skip-to-content">
-            Перейти к содержимому
-          </a>
-          {children}
-          <Toaster position="bottom-right" richColors closeButton />
-        </ThemeProvider>
+        <TRPCReactProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <a href="#main-content" className="skip-to-content">
+              Перейти к содержимому
+            </a>
+            {children}
+            <Toaster position="bottom-right" richColors closeButton />
+          </ThemeProvider>
+        </TRPCReactProvider>
         <Analytics />
       </body>
     </html>

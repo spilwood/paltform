@@ -45,13 +45,13 @@ export default function InitDataPage() {
   }, [initDataState, initDataRaw]);
 
   const userRows = useMemo<DisplayDataRow[] | undefined>(() => {
-    return initDataState && initDataState.user
+    return initDataState?.user
       ? getUserRows(initDataState.user)
       : undefined;
   }, [initDataState]);
 
   const receiverRows = useMemo<DisplayDataRow[] | undefined>(() => {
-    return initDataState && initDataState.receiver
+    return initDataState?.receiver
       ? getUserRows(initDataState.receiver)
       : undefined;
   }, [initDataState]);

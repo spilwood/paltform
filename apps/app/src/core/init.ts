@@ -48,7 +48,7 @@ export async function init(options: {
             const lp = retrieveLaunchParams();
             tp = (lp.tgWebAppThemeParams || {}) as Partial<ThemeParams>;
           }
-          return emitEvent("theme_changed", { theme_params: tp as any });
+          return emitEvent("theme_changed", { theme_params: tp });
         }
 
         if (event.name === "web_app_request_safe_area") {
@@ -72,7 +72,7 @@ export async function init(options: {
   try {
     miniApp.mount();
     themeParams.bindCssVars();
-  } catch (e) {
+  } catch (_e) {
     // miniApp not available
   }
 
@@ -80,7 +80,7 @@ export async function init(options: {
     viewport.mount().then(() => {
       viewport.bindCssVars();
     });
-  } catch (e) {
+  } catch (_e) {
     // viewport not available
   }
 }

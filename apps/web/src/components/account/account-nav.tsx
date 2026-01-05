@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
   Package,
   Settings,
@@ -15,18 +15,18 @@ import {
   Star,
   MessageSquare,
   Home,
-} from "lucide-react"
-import { useAuth } from "@/lib/store/auth"
-import { useRouter } from "next/navigation"
-import { Badge } from "@spilwood/ui"
-import { Separator } from "@spilwood/ui"
+} from "lucide-react";
+import { useAuth } from "@/lib/store/auth";
+import { useRouter } from "next/navigation";
+import { Badge } from "@spilwood/ui";
+import { Separator } from "@spilwood/ui";
 
 const buyerNavItems = [
   { name: "Обзор", href: "/account", icon: LayoutDashboard },
   { name: "Заказы", href: "/account/orders", icon: Package },
   { name: "Избранное", href: "/account/favorites", icon: Heart },
   { name: "Настройки", href: "/account/settings", icon: Settings },
-]
+];
 
 const craftsmanNavItems = [
   { name: "Панель мастера", href: "/account", icon: LayoutDashboard },
@@ -34,21 +34,26 @@ const craftsmanNavItems = [
   { name: "Добавить изделие", href: "/account/products/new", icon: PlusCircle },
   { name: "Статистика", href: "/account/analytics", icon: BarChart3 },
   { name: "Отзывы", href: "/account/reviews", icon: Star },
-  { name: "Сообщения", href: "/account/messages", icon: MessageSquare, badge: 3 },
+  {
+    name: "Сообщения",
+    href: "/account/messages",
+    icon: MessageSquare,
+    badge: 3,
+  },
   { name: "Настройки", href: "/account/settings", icon: Settings },
-]
+];
 
 export function AccountNav() {
-  const pathname = usePathname()
-  const { logout, user, isCraftsman, switchRole } = useAuth()
-  const router = useRouter()
+  const pathname = usePathname();
+  const { logout, user, isCraftsman, switchRole } = useAuth();
+  const router = useRouter();
 
   const handleLogout = () => {
-    logout()
-    router.push("/")
-  }
+    logout();
+    router.push("/");
+  };
 
-  const navItems = isCraftsman ? craftsmanNavItems : buyerNavItems
+  const navItems = isCraftsman ? craftsmanNavItems : buyerNavItems;
 
   return (
     <nav className="space-y-1">
@@ -66,10 +71,13 @@ export function AccountNav() {
       <div className="mb-4 rounded-lg border border-border bg-muted/30 p-3">
         <div className="flex items-center justify-between">
           <span className="text-xs text-muted-foreground">Режим:</span>
-          <Badge variant={isCraftsman ? "default" : "secondary"}>{isCraftsman ? "Мастер" : "Покупатель"}</Badge>
+          <Badge variant={isCraftsman ? "default" : "secondary"}>
+            {isCraftsman ? "Мастер" : "Покупатель"}
+          </Badge>
         </div>
         {user && (
           <button
+            type="button"
             onClick={() => switchRole(isCraftsman ? "buyer" : "craftsman")}
             className="mt-2 w-full text-xs text-primary hover:underline"
           >
@@ -81,7 +89,7 @@ export function AccountNav() {
       <Separator className="my-3" />
 
       {navItems.map((item) => {
-        const isActive = pathname === item.href
+        const isActive = pathname === item.href;
         return (
           <Link
             key={item.href}
@@ -90,7 +98,7 @@ export function AccountNav() {
               "flex items-center justify-between gap-3 rounded-md px-4 py-3 text-sm transition-colors",
               isActive
                 ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
           >
             <div className="flex items-center gap-3">
@@ -98,17 +106,21 @@ export function AccountNav() {
               {item.name}
             </div>
             {item.badge && (
-              <Badge variant={isActive ? "secondary" : "default"} className="h-5 min-w-5 justify-center text-xs">
+              <Badge
+                variant={isActive ? "secondary" : "default"}
+                className="h-5 min-w-5 justify-center text-xs"
+              >
                 {item.badge}
               </Badge>
             )}
           </Link>
-        )
+        );
       })}
 
       <Separator className="my-3" />
 
       <button
+        type="button"
         onClick={handleLogout}
         className="flex w-full items-center gap-3 rounded-md px-4 py-3 text-sm text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
       >
@@ -116,5 +128,5 @@ export function AccountNav() {
         Выйти
       </button>
     </nav>
-  )
+  );
 }

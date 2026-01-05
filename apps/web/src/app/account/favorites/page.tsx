@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { useAuth } from "@/lib/store/auth"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { AccountNav } from "@/components/account/account-nav"
-import { Button } from "@spilwood/ui"
-import { Card, CardContent } from "@spilwood/ui"
-import { Heart, ShoppingCart } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
-import { AspectRatio } from "@spilwood/ui"
+import { useAuth } from "@/lib/store/auth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { AccountNav } from "@/components/account/account-nav";
+import { Button } from "@spilwood/ui";
+import { Card, CardContent } from "@spilwood/ui";
+import { Heart, ShoppingCart } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { AspectRatio } from "@spilwood/ui";
 
 // Mock favorites data
 const mockFavorites = [
@@ -40,20 +40,20 @@ const mockFavorites = [
     thickness: 4,
     inStock: false,
   },
-]
+];
 
 export default function FavoritesPage() {
-  const { isAuthenticated, isBuyer } = useAuth()
-  const router = useRouter()
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/account/login")
+      router.push("/account/login");
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    return null
+    return null;
   }
 
   return (
@@ -71,7 +71,9 @@ export default function FavoritesPage() {
               <CardContent className="flex flex-col items-center py-16 text-center">
                 <Heart className="h-16 w-16 text-muted-foreground/30" />
                 <p className="mt-4 text-lg">Пока нет избранных товаров</p>
-                <p className="mt-1 text-sm text-muted-foreground">Добавляйте понравившиеся товары в избранное</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Добавляйте понравившиеся товары в избранное
+                </p>
                 <Button className="mt-6" asChild>
                   <Link href="/spily">Перейти в каталог</Link>
                 </Button>
@@ -80,9 +82,15 @@ export default function FavoritesPage() {
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {mockFavorites.map((item) => (
-                <Card key={item.id} className="group overflow-hidden border-0 bg-transparent shadow-none">
+                <Card
+                  key={item.id}
+                  className="group overflow-hidden border-0 bg-transparent shadow-none"
+                >
                   <Link href={`/spily/${item.id}`}>
-                    <AspectRatio ratio={1} className="relative overflow-hidden rounded-lg bg-muted">
+                    <AspectRatio
+                      ratio={1}
+                      className="relative overflow-hidden rounded-lg bg-muted"
+                    >
                       <Image
                         src={item.image || "/placeholder.svg"}
                         alt={item.name}
@@ -98,9 +106,10 @@ export default function FavoritesPage() {
                       )}
                       {/* Remove from favorites button */}
                       <button
+                        type="button"
                         onClick={(e) => {
-                          e.preventDefault()
-                          console.log("[v0] Remove from favorites:", item.id)
+                          e.preventDefault();
+                          console.log("[v0] Remove from favorites:", item.id);
                         }}
                         className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-background/95 text-red-500 opacity-0 shadow-sm backdrop-blur-sm transition-opacity hover:bg-background group-hover:opacity-100"
                       >
@@ -110,7 +119,9 @@ export default function FavoritesPage() {
                   </Link>
                   <CardContent className="px-0 pt-4">
                     <Link href={`/spily/${item.id}`}>
-                      <h3 className="font-medium transition-colors group-hover:text-primary">{item.name}</h3>
+                      <h3 className="font-medium transition-colors group-hover:text-primary">
+                        {item.name}
+                      </h3>
                     </Link>
                     <div className="mt-1 flex items-center gap-3 text-sm text-muted-foreground">
                       <span>⌀ {item.diameter} см</span>
@@ -118,14 +129,16 @@ export default function FavoritesPage() {
                       <span>{item.thickness} см</span>
                     </div>
                     <div className="mt-4 flex items-center justify-between gap-2">
-                      <span className="text-lg font-medium">{item.price.toLocaleString()} ₽</span>
+                      <span className="text-lg font-medium">
+                        {item.price.toLocaleString()} ₽
+                      </span>
                       <Button
                         size="sm"
                         variant="outline"
                         disabled={!item.inStock}
                         onClick={(e) => {
-                          e.preventDefault()
-                          console.log("[v0] Add to cart:", item.id)
+                          e.preventDefault();
+                          console.log("[v0] Add to cart:", item.id);
                         }}
                       >
                         <ShoppingCart className="h-3 w-3" />В корзину
@@ -139,5 +152,5 @@ export default function FavoritesPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }

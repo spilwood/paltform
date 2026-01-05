@@ -2,6 +2,15 @@ export function isRecord(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === "object" && !Array.isArray(v);
 }
 
+type ClassValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | Record<string, unknown>
+  | ClassValue[];
+
 /**
  * Function which joins passed values with space following these rules:
  * 1. If value is non-empty string, it will be added to output.
@@ -13,7 +22,7 @@ export function isRecord(v: unknown): v is Record<string, unknown> {
  * @param values - values array.
  * @returns Final class name.
  */
-export function classNames(...values: any[]): string {
+export function classNames(...values: ClassValue[]): string {
   return values
     .map((value) => {
       if (typeof value === "string") {
@@ -22,13 +31,15 @@ export function classNames(...values: any[]): string {
 
       if (isRecord(value)) {
         return classNames(
-          Object.entries(value).map((entry) => entry[1] && entry[0]),
+          Object.entries(value).map((entry) => entry[1] && entry[0])
         );
       }
 
       if (Array.isArray(value)) {
         return classNames(...value);
       }
+
+      return undefined;
     })
     .filter(Boolean)
     .join(" ");
@@ -46,11 +57,11 @@ type UnionRequiredKeys<U> = U extends U
 
 type UnionOptionalKeys<U> = Exclude<UnionStringKeys<U>, UnionRequiredKeys<U>>;
 
-export type MergeClassNames<Tuple extends any[]> =
+export type MergeClassNames<Tuple extends ClassValue[]> =
   // Removes all types from union that will be ignored by the mergeClassNames function.
   Exclude<
     Tuple[number],
-    number | string | null | undefined | any[] | boolean
+    number | string | null | undefined | ClassValue[] | boolean
   > extends infer Union
     ? { [K in UnionRequiredKeys<Union>]: string } & {
         [K in UnionOptionalKeys<Union>]?: string;
@@ -65,21 +76,19 @@ export type MergeClassNames<Tuple extends any[]> =
  * @returns An object with keys from all objects with merged values.
  * @see classNames
  */
-export function mergeClassNames<T extends any[]>(
+export function mergeClassNames<T extends ClassValue[]>(
   ...partials: T
 ): MergeClassNames<T> {
-  return partials.reduce<MergeClassNames<T>>(
-    (acc, partial) => {
-      if (isRecord(partial)) {
-        Object.entries(partial).forEach(([key, value]) => {
-          const className = classNames((acc as any)[key], value);
-          if (className) {
-            (acc as any)[key] = className;
-          }
-        });
-      }
-      return acc;
-    },
-    {} as MergeClassNames<T>,
-  );
+  return partials.reduce<MergeClassNames<T>>((acc, partial) => {
+    if (isRecord(partial)) {
+      Object.entries(partial).forEach(([key, value]) => {
+        const accRecord = acc as Record<string, string>;
+        const className = classNames(accRecord[key], value);
+        if (className) {
+          accRecord[key] = className;
+        }
+      });
+    }
+    return acc;
+  }, {} as MergeClassNames<T>);
 }

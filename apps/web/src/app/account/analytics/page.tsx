@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useAuth } from "@/lib/store/auth"
-import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
-import { AccountNav } from "@/components/account/account-nav"
+import { useAuth } from "@/lib/store/auth";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { AccountNav } from "@/components/account/account-nav";
 import {
   TrendingUp,
   TrendingDown,
@@ -15,10 +15,22 @@ import {
   Users,
   Calendar,
   Filter,
-} from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@spilwood/ui"
-import { Button } from "@spilwood/ui"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@spilwood/ui"
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@spilwood/ui";
+import { Button } from "@spilwood/ui";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@spilwood/ui";
 import {
   AreaChart,
   Area,
@@ -32,7 +44,7 @@ import {
   PieChart,
   Pie,
   Cell,
-} from "recharts"
+} from "recharts";
 
 // Mock data for analytics
 const viewsData = [
@@ -43,7 +55,7 @@ const viewsData = [
   { date: "29 мая", views: 502, clicks: 198, orders: 32 },
   { date: "5 июн", views: 445, clicks: 167, orders: 28 },
   { date: "12 июн", views: 623, clicks: 234, orders: 41 },
-]
+];
 
 const revenueData = [
   { month: "Янв", revenue: 45000, orders: 28 },
@@ -52,21 +64,21 @@ const revenueData = [
   { month: "Апр", revenue: 48000, orders: 31 },
   { month: "Май", revenue: 72000, orders: 48 },
   { month: "Июн", revenue: 68000, orders: 45 },
-]
+];
 
 const productPerformance = [
   { name: "Спилы березы 20-25см", views: 1240, orders: 86, revenue: 129000 },
   { name: "Пеньки сосны 30-40см", views: 980, orders: 64, revenue: 96000 },
   { name: "Спилы сосны 15-20см", views: 745, orders: 52, revenue: 62400 },
   { name: "Декоративные спилы", views: 623, orders: 41, revenue: 51200 },
-]
+];
 
 const categoryData = [
   { name: "Спилы березы", value: 42, color: "#f59e0b" },
   { name: "Спилы сосны", value: 28, color: "#10b981" },
   { name: "Пеньки", value: 20, color: "#3b82f6" },
   { name: "Декор", value: 10, color: "#8b5cf6" },
-]
+];
 
 const StatCard = ({
   title,
@@ -75,11 +87,11 @@ const StatCard = ({
   icon: Icon,
   trend,
 }: {
-  title: string
-  value: string | number
-  change: string
-  icon: any
-  trend: "up" | "down"
+  title: string;
+  value: string | number;
+  change: string;
+  icon: React.ComponentType<{ className?: string }>;
+  trend: "up" | "down";
 }) => (
   <div className="relative overflow-hidden rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/50 hover:shadow-lg">
     <div className="flex items-start justify-between">
@@ -92,8 +104,14 @@ const StatCard = ({
           ) : (
             <TrendingDown className="h-4 w-4 text-red-500" />
           )}
-          <span className={`text-sm font-medium ${trend === "up" ? "text-green-500" : "text-red-500"}`}>{change}</span>
-          <span className="text-sm text-muted-foreground">vs прошлый месяц</span>
+          <span
+            className={`text-sm font-medium ${trend === "up" ? "text-green-500" : "text-red-500"}`}
+          >
+            {change}
+          </span>
+          <span className="text-sm text-muted-foreground">
+            vs прошлый месяц
+          </span>
         </div>
       </div>
       <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
@@ -101,26 +119,26 @@ const StatCard = ({
       </div>
     </div>
   </div>
-)
+);
 
 export default function AnalyticsPage() {
-  const { user, isAuthenticated, isCraftsman } = useAuth()
-  const router = useRouter()
-  const [dateRange, setDateRange] = useState("30d")
-  const [isLoading, setIsLoading] = useState(true)
+  const { user, isAuthenticated, isCraftsman } = useAuth();
+  const router = useRouter();
+  const [dateRange, setDateRange] = useState("30d");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/account/login")
+      router.push("/account/login");
     } else if (!isCraftsman) {
-      router.push("/account")
+      router.push("/account");
     } else {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [isAuthenticated, isCraftsman, router])
+  }, [isAuthenticated, isCraftsman, router]);
 
   if (!isAuthenticated || !user || !isCraftsman || isLoading) {
-    return null
+    return null;
   }
 
   return (
@@ -129,7 +147,9 @@ export default function AnalyticsPage() {
       <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-light tracking-tight">Аналитика</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Отслеживайте производительность ваших изделий и продаж</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Отслеживайте производительность ваших изделий и продаж
+          </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <Select value={dateRange} onValueChange={setDateRange}>
@@ -158,10 +178,34 @@ export default function AnalyticsPage() {
         <div className="space-y-8">
           {/* Key Metrics */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <StatCard title="Просмотры" value="3,847" change="+23.4%" icon={Eye} trend="up" />
-            <StatCard title="Выручка" value="₽284,600" change="+18.2%" icon={DollarSign} trend="up" />
-            <StatCard title="Заказы" value="142" change="+12.8%" icon={ShoppingCart} trend="up" />
-            <StatCard title="Конверсия" value="3.69%" change="-2.1%" icon={TrendingUp} trend="down" />
+            <StatCard
+              title="Просмотры"
+              value="3,847"
+              change="+23.4%"
+              icon={Eye}
+              trend="up"
+            />
+            <StatCard
+              title="Выручка"
+              value="₽284,600"
+              change="+18.2%"
+              icon={DollarSign}
+              trend="up"
+            />
+            <StatCard
+              title="Заказы"
+              value="142"
+              change="+12.8%"
+              icon={ShoppingCart}
+              trend="up"
+            />
+            <StatCard
+              title="Конверсия"
+              value="3.69%"
+              change="-2.1%"
+              icon={TrendingUp}
+              trend="down"
+            />
           </div>
 
           {/* Views & Orders Chart */}
@@ -170,12 +214,16 @@ export default function AnalyticsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle>Обзор активности</CardTitle>
-                  <CardDescription className="mt-2">Просмотры, клики и заказы за выбранный период</CardDescription>
+                  <CardDescription className="mt-2">
+                    Просмотры, клики и заказы за выбранный период
+                  </CardDescription>
                 </div>
                 <div className="flex gap-4">
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-amber-500" />
-                    <span className="text-sm text-muted-foreground">Просмотры</span>
+                    <span className="text-sm text-muted-foreground">
+                      Просмотры
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-green-500" />
@@ -183,7 +231,9 @@ export default function AnalyticsPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-blue-500" />
-                    <span className="text-sm text-muted-foreground">Заказы</span>
+                    <span className="text-sm text-muted-foreground">
+                      Заказы
+                    </span>
                   </div>
                 </div>
               </div>
@@ -196,22 +246,40 @@ export default function AnalyticsPage() {
                       <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3} />
                       <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
                     </linearGradient>
-                    <linearGradient id="colorClicks" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorClicks"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
                       <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                     </linearGradient>
-                    <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorOrders"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
                       <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-muted"
+                  />
                   <XAxis
                     dataKey="date"
                     className="text-xs text-muted-foreground"
                     tick={{ fill: "hsl(var(--muted-foreground))" }}
                   />
-                  <YAxis className="text-xs text-muted-foreground" tick={{ fill: "hsl(var(--muted-foreground))" }} />
+                  <YAxis
+                    className="text-xs text-muted-foreground"
+                    tick={{ fill: "hsl(var(--muted-foreground))" }}
+                  />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: "hsl(var(--card))",
@@ -219,9 +287,27 @@ export default function AnalyticsPage() {
                       borderRadius: "8px",
                     }}
                   />
-                  <Area type="monotone" dataKey="views" stroke="#f59e0b" fillOpacity={1} fill="url(#colorViews)" />
-                  <Area type="monotone" dataKey="clicks" stroke="#10b981" fillOpacity={1} fill="url(#colorClicks)" />
-                  <Area type="monotone" dataKey="orders" stroke="#3b82f6" fillOpacity={1} fill="url(#colorOrders)" />
+                  <Area
+                    type="monotone"
+                    dataKey="views"
+                    stroke="#f59e0b"
+                    fillOpacity={1}
+                    fill="url(#colorViews)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="clicks"
+                    stroke="#10b981"
+                    fillOpacity={1}
+                    fill="url(#colorClicks)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="orders"
+                    stroke="#3b82f6"
+                    fillOpacity={1}
+                    fill="url(#colorOrders)"
+                  />
                 </AreaChart>
               </ResponsiveContainer>
             </CardContent>
@@ -233,13 +319,21 @@ export default function AnalyticsPage() {
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <CardTitle>Выручка по месяцам</CardTitle>
-                <CardDescription className="mt-2">Динамика дохода за последние 6 месяцев</CardDescription>
+                <CardDescription className="mt-2">
+                  Динамика дохода за последние 6 месяцев
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={revenueData}>
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                    <XAxis dataKey="month" tick={{ fill: "hsl(var(--muted-foreground))" }} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      className="stroke-muted"
+                    />
+                    <XAxis
+                      dataKey="month"
+                      tick={{ fill: "hsl(var(--muted-foreground))" }}
+                    />
                     <YAxis tick={{ fill: "hsl(var(--muted-foreground))" }} />
                     <Tooltip
                       contentStyle={{
@@ -247,9 +341,16 @@ export default function AnalyticsPage() {
                         border: "1px solid hsl(var(--border))",
                         borderRadius: "8px",
                       }}
-                      formatter={(value: any) => [`₽${value.toLocaleString()}`, "Выручка"]}
+                      formatter={(value: number) => [
+                        `₽${value.toLocaleString()}`,
+                        "Выручка",
+                      ]}
                     />
-                    <Bar dataKey="revenue" fill="#f59e0b" radius={[8, 8, 0, 0]} />
+                    <Bar
+                      dataKey="revenue"
+                      fill="#f59e0b"
+                      radius={[8, 8, 0, 0]}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -259,7 +360,9 @@ export default function AnalyticsPage() {
             <Card className="border-0 shadow-lg">
               <CardHeader>
                 <CardTitle>Распределение по категориям</CardTitle>
-                <CardDescription className="mt-2">Доля продаж по типам изделий</CardDescription>
+                <CardDescription className="mt-2">
+                  Доля продаж по типам изделий
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
@@ -274,8 +377,8 @@ export default function AnalyticsPage() {
                         paddingAngle={4}
                         dataKey="value"
                       >
-                        {categoryData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        {categoryData.map((entry) => (
+                          <Cell key={entry.name} fill={entry.color} />
                         ))}
                       </Pie>
                       <Tooltip
@@ -289,12 +392,22 @@ export default function AnalyticsPage() {
                   </ResponsiveContainer>
                   <div className="space-y-3">
                     {categoryData.map((category) => (
-                      <div key={category.name} className="flex items-center justify-between gap-8">
+                      <div
+                        key={category.name}
+                        className="flex items-center justify-between gap-8"
+                      >
                         <div className="flex items-center gap-2">
-                          <div className="h-3 w-3 rounded-full" style={{ backgroundColor: category.color }} />
-                          <span className="text-sm text-muted-foreground">{category.name}</span>
+                          <div
+                            className="h-3 w-3 rounded-full"
+                            style={{ backgroundColor: category.color }}
+                          />
+                          <span className="text-sm text-muted-foreground">
+                            {category.name}
+                          </span>
                         </div>
-                        <span className="text-sm font-medium">{category.value}%</span>
+                        <span className="text-sm font-medium">
+                          {category.value}%
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -307,7 +420,9 @@ export default function AnalyticsPage() {
           <Card className="border-0 shadow-lg">
             <CardHeader>
               <CardTitle>Производительность изделий</CardTitle>
-              <CardDescription className="mt-2">Топ продуктов по просмотрам и продажам</CardDescription>
+              <CardDescription className="mt-2">
+                Топ продуктов по просмотрам и продажам
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -322,21 +437,31 @@ export default function AnalyticsPage() {
                       </div>
                       <div>
                         <h4 className="font-medium">{product.name}</h4>
-                        <p className="text-sm text-muted-foreground">{product.views.toLocaleString()} просмотров</p>
+                        <p className="text-sm text-muted-foreground">
+                          {product.views.toLocaleString()} просмотров
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-6">
                       <div>
                         <p className="text-sm text-muted-foreground">Заказы</p>
-                        <p className="text-xl font-semibold">{product.orders}</p>
+                        <p className="text-xl font-semibold">
+                          {product.orders}
+                        </p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Выручка</p>
-                        <p className="text-xl font-semibold">₽{product.revenue.toLocaleString()}</p>
+                        <p className="text-xl font-semibold">
+                          ₽{product.revenue.toLocaleString()}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">Конверсия</p>
-                        <p className="text-xl font-semibold">{((product.orders / product.views) * 100).toFixed(2)}%</p>
+                        <p className="text-sm text-muted-foreground">
+                          Конверсия
+                        </p>
+                        <p className="text-xl font-semibold">
+                          {((product.orders / product.views) * 100).toFixed(2)}%
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -352,7 +477,9 @@ export default function AnalyticsPage() {
                 <div className="flex items-center gap-3">
                   <Users className="h-8 w-8 text-amber-500" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Новые клиенты</p>
+                    <p className="text-sm text-muted-foreground">
+                      Новые клиенты
+                    </p>
                     <p className="text-2xl font-semibold">89</p>
                   </div>
                 </div>
@@ -376,7 +503,9 @@ export default function AnalyticsPage() {
                 <div className="flex items-center gap-3">
                   <Package className="h-8 w-8 text-blue-500" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Всего изделий</p>
+                    <p className="text-sm text-muted-foreground">
+                      Всего изделий
+                    </p>
                     <p className="text-2xl font-semibold">24</p>
                   </div>
                 </div>
@@ -391,5 +520,5 @@ export default function AnalyticsPage() {
         <AccountNav />
       </div>
     </main>
-  )
+  );
 }

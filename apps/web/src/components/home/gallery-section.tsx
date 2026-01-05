@@ -172,6 +172,7 @@ export function GallerySection() {
                 {works.map((work, index) => (
                   <button
                     key={index}
+                    type="button"
                     onClick={() => setCurrentIndex(index)}
                     role="tab"
                     aria-selected={index === currentIndex}

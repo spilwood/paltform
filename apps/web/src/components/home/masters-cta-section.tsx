@@ -27,7 +27,7 @@ export function MastersCtaSection() {
               </p>
 
               <ul className="mt-8 space-y-3">
-                {features.map((feature, index) => (
+                {features.map((feature, _index) => (
                   <li key={feature} className="flex items-center gap-3 text-sm text-muted-foreground">
                     <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
                       <Check className="h-3 w-3 text-primary" />

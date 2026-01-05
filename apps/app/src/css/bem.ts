@@ -1,21 +1,30 @@
 import { classNames, isRecord } from "./classnames";
 
-export type BlockFn = (...mods: any) => string
+type ModValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | Record<string, unknown>
+  | ModValue[];
 
-export type ElemFn = (elem: string, ...mods: any) => string
+export type BlockFn = (...mods: ModValue[]) => string;
+
+export type ElemFn = (elem: string, ...mods: ModValue[]) => string;
 
 /**
  * Applies mods to the specified element.
  * @param element - element name.
  * @param mod - mod to apply.
  */
-function applyMods(element: string, mod: any): string {
+function applyMods(element: string, mod: ModValue): string {
   if (Array.isArray(mod)) {
     return classNames(mod.map((m) => applyMods(element, m)));
   }
   if (isRecord(mod)) {
     return classNames(
-      Object.entries(mod).map(([mod, v]) => v && applyMods(element, mod)),
+      Object.entries(mod).map(([mod, v]) => v && applyMods(element, mod))
     );
   }
   const v = classNames(mod);
@@ -27,7 +36,7 @@ function applyMods(element: string, mod: any): string {
  * @param element - element name.
  * @param mods - mod to apply.
  */
-function computeClassnames(element: string, ...mods: any): string {
+function computeClassnames(element: string, ...mods: ModValue[]): string {
   return classNames(element, applyMods(element, mods));
 }
 

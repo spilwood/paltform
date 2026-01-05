@@ -5,12 +5,7 @@ import { Button } from "@spilwood/ui";
 import { Input } from "@spilwood/ui";
 import { Label } from "@spilwood/ui";
 import { Textarea } from "@spilwood/ui";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardTitle,
-} from "@spilwood/ui";
+import { Card, CardContent, CardDescription, CardTitle } from "@spilwood/ui";
 import { RadioGroup, RadioGroupItem } from "@spilwood/ui";
 import { Slider } from "@spilwood/ui";
 import { Separator } from "@spilwood/ui";
@@ -174,6 +169,7 @@ export function CustomOrderForm() {
         {[1, 2, 3].map((s) => (
           <button
             key={s}
+            type="button"
             onClick={() => s < step && setStep(s as 1 | 2 | 3)}
             disabled={s > step}
             className={`flex flex-1 items-center justify-center gap-2 py-4 text-sm font-medium transition-colors ${
@@ -399,7 +395,7 @@ export function CustomOrderForm() {
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      quantity: Number.parseInt(e.target.value) || 1,
+                      quantity: Number.parseInt(e.target.value, 10) || 1,
                     }))
                   }
                   className="w-24 text-center font-mono"

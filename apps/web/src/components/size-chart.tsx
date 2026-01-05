@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@spilwood/ui"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@spilwood/ui"
-import { Badge } from "@spilwood/ui"
-import { cn } from "@/lib/utils"
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@spilwood/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@spilwood/ui";
+import { Badge } from "@spilwood/ui";
+import { cn } from "@/lib/utils";
 
 interface SizeData {
-  diameter: number
-  label: string
-  usage: string[]
-  comparison: string
+  diameter: number;
+  label: string;
+  usage: string[];
+  comparison: string;
 }
 
 const sliceSizes: SizeData[] = [
@@ -50,7 +56,7 @@ const sliceSizes: SizeData[] = [
     usage: ["Журнальный столик", "Арт-объект", "Крупный декор"],
     comparison: "Как барабан",
   },
-]
+];
 
 const stumpSizes: SizeData[] = [
   {
@@ -71,17 +77,19 @@ const stumpSizes: SizeData[] = [
     usage: ["Прикроватный столик", "Сиденье", "Декор"],
     comparison: "Как пуфик",
   },
-]
+];
 
 export function SizeChart() {
-  const [selectedSize, setSelectedSize] = useState<number | null>(null)
-  const maxDiameter = 40
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const maxDiameter = 40;
 
   return (
     <Card className="overflow-hidden">
       <CardHeader className="px-4 sm:px-6">
         <CardTitle className="text-lg sm:text-xl">Размерная сетка</CardTitle>
-        <CardDescription className="text-sm">Визуальное сравнение размеров спилов и пеньков</CardDescription>
+        <CardDescription className="text-sm">
+          Визуальное сравнение размеров спилов и пеньков
+        </CardDescription>
       </CardHeader>
       <CardContent className="px-4 sm:px-6">
         <Tabs defaultValue="slices">
@@ -101,16 +109,22 @@ export function SizeChart() {
                   {sliceSizes.map((size) => (
                     <button
                       key={size.diameter}
-                      onClick={() => setSelectedSize(selectedSize === size.diameter ? null : size.diameter)}
+                      type="button"
+                      onClick={() =>
+                        setSelectedSize(
+                          selectedSize === size.diameter ? null : size.diameter
+                        )
+                      }
                       className={cn(
                         "flex flex-col items-center gap-2 transition-transform hover:scale-105 flex-shrink-0",
-                        selectedSize === size.diameter && "scale-110",
+                        selectedSize === size.diameter && "scale-110"
                       )}
                     >
                       <div
                         className={cn(
                           "rounded-full border-2 border-primary/20 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/40 dark:to-amber-800/40 transition-all",
-                          selectedSize === size.diameter && "border-primary ring-2 ring-primary/20",
+                          selectedSize === size.diameter &&
+                            "border-primary ring-2 ring-primary/20"
                         )}
                         style={{
                           width: `${(size.diameter / maxDiameter) * 80}px`,
@@ -119,7 +133,9 @@ export function SizeChart() {
                           minHeight: "20px",
                         }}
                       />
-                      <span className="text-[10px] sm:text-xs font-medium whitespace-nowrap">{size.label}</span>
+                      <span className="text-[10px] sm:text-xs font-medium whitespace-nowrap">
+                        {size.label}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -132,14 +148,20 @@ export function SizeChart() {
                     .map((size) => (
                       <div key={size.diameter}>
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                          <span className="text-xl sm:text-2xl font-semibold">{size.label}</span>
+                          <span className="text-xl sm:text-2xl font-semibold">
+                            {size.label}
+                          </span>
                           <Badge variant="secondary" className="text-xs w-fit">
                             {size.comparison}
                           </Badge>
                         </div>
                         <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
                           {size.usage.map((use) => (
-                            <Badge key={use} variant="outline" className="text-[10px] sm:text-xs">
+                            <Badge
+                              key={use}
+                              variant="outline"
+                              className="text-[10px] sm:text-xs"
+                            >
                               {use}
                             </Badge>
                           ))}
@@ -159,17 +181,32 @@ export function SizeChart() {
                 <table className="w-full text-xs sm:text-sm min-w-[500px]">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="pb-2 sm:pb-3 px-2 sm:px-0 text-left font-medium">Размер</th>
-                      <th className="pb-2 sm:pb-3 px-2 sm:px-0 text-left font-medium">Сравнение</th>
-                      <th className="pb-2 sm:pb-3 px-2 sm:px-0 text-left font-medium">Применение</th>
+                      <th className="pb-2 sm:pb-3 px-2 sm:px-0 text-left font-medium">
+                        Размер
+                      </th>
+                      <th className="pb-2 sm:pb-3 px-2 sm:px-0 text-left font-medium">
+                        Сравнение
+                      </th>
+                      <th className="pb-2 sm:pb-3 px-2 sm:px-0 text-left font-medium">
+                        Применение
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {sliceSizes.map((size) => (
-                      <tr key={size.diameter} className="border-b border-border last:border-0">
-                        <td className="py-2 sm:py-3 px-2 sm:px-0 font-medium">{size.label}</td>
-                        <td className="py-2 sm:py-3 px-2 sm:px-0 text-muted-foreground">{size.comparison}</td>
-                        <td className="py-2 sm:py-3 px-2 sm:px-0 text-muted-foreground">{size.usage.join(", ")}</td>
+                      <tr
+                        key={size.diameter}
+                        className="border-b border-border last:border-0"
+                      >
+                        <td className="py-2 sm:py-3 px-2 sm:px-0 font-medium">
+                          {size.label}
+                        </td>
+                        <td className="py-2 sm:py-3 px-2 sm:px-0 text-muted-foreground">
+                          {size.comparison}
+                        </td>
+                        <td className="py-2 sm:py-3 px-2 sm:px-0 text-muted-foreground">
+                          {size.usage.join(", ")}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -185,23 +222,31 @@ export function SizeChart() {
                   {stumpSizes.map((size) => (
                     <button
                       key={size.diameter}
-                      onClick={() => setSelectedSize(selectedSize === size.diameter ? null : size.diameter)}
+                      type="button"
+                      onClick={() =>
+                        setSelectedSize(
+                          selectedSize === size.diameter ? null : size.diameter
+                        )
+                      }
                       className={cn(
                         "flex flex-col items-center gap-2 transition-transform hover:scale-105 flex-shrink-0",
-                        selectedSize === size.diameter && "scale-110",
+                        selectedSize === size.diameter && "scale-110"
                       )}
                     >
                       <div
                         className={cn(
                           "w-12 sm:w-16 rounded-t-lg border-2 border-primary/20 bg-gradient-to-b from-amber-100 to-amber-300 dark:from-amber-900/40 dark:to-amber-700/40 transition-all",
-                          selectedSize === size.diameter && "border-primary ring-2 ring-primary/20",
+                          selectedSize === size.diameter &&
+                            "border-primary ring-2 ring-primary/20"
                         )}
                         style={{
                           height: `${(size.diameter / 30) * 60}px`,
                           minHeight: "30px",
                         }}
                       />
-                      <span className="text-[10px] sm:text-xs font-medium whitespace-nowrap">{size.label}</span>
+                      <span className="text-[10px] sm:text-xs font-medium whitespace-nowrap">
+                        {size.label}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -214,14 +259,20 @@ export function SizeChart() {
                     .map((size) => (
                       <div key={size.diameter}>
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                          <span className="text-xl sm:text-2xl font-semibold">{size.label}</span>
+                          <span className="text-xl sm:text-2xl font-semibold">
+                            {size.label}
+                          </span>
                           <Badge variant="secondary" className="text-xs w-fit">
                             {size.comparison}
                           </Badge>
                         </div>
                         <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
                           {size.usage.map((use) => (
-                            <Badge key={use} variant="outline" className="text-[10px] sm:text-xs">
+                            <Badge
+                              key={use}
+                              variant="outline"
+                              className="text-[10px] sm:text-xs"
+                            >
                               {use}
                             </Badge>
                           ))}
@@ -241,5 +292,5 @@ export function SizeChart() {
         </Tabs>
       </CardContent>
     </Card>
-  )
+  );
 }

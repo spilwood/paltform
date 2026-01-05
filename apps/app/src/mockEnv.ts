@@ -29,7 +29,7 @@ export async function mockEnv(): Promise<void> {
               // Here you can write your own handlers for all known Telegram Mini Apps methods.
               if (e.name === "web_app_request_theme") {
                 return emitEvent("theme_changed", {
-                  theme_params: themeParams as any,
+                  theme_params: themeParams,
                 });
               }
               if (e.name === "web_app_request_viewport") {
@@ -68,7 +68,7 @@ export async function mockEnv(): Promise<void> {
               [
                 "tgWebAppData",
                 new URLSearchParams([
-                  ["auth_date", ((new Date().getTime() / 1000) | 0).toString()],
+                  ["auth_date", ((Date.now() / 1000) | 0).toString()],
                   ["hash", "some-hash"],
                   ["signature", "some-signature"],
                   ["user", JSON.stringify({ id: 1, first_name: "Vladislav" })],
@@ -80,7 +80,7 @@ export async function mockEnv(): Promise<void> {
           });
 
           console.info(
-            "⚠️ As long as the current environment was not considered as the Telegram-based one, it was mocked. Take a note, that you should not do it in production and current behavior is only specific to the development process. Environment mocking is also applied only in development mode. So, after building the application, you will not see this behavior and related warning, leading to crashing the application outside Telegram.",
+            "⚠️ As long as the current environment was not considered as the Telegram-based one, it was mocked. Take a note, that you should not do it in production and current behavior is only specific to the development process. Environment mocking is also applied only in development mode. So, after building the application, you will not see this behavior and related warning, leading to crashing the application outside Telegram."
           );
         }
       });

@@ -38,7 +38,7 @@ export function ProductChat() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-  }, [messages])
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
