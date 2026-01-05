@@ -1,6 +1,6 @@
 ---
 inclusion: fileMatch
-fileMatchPattern: "apps/app/**/*"
+fileMatchPattern: "apps/web/**/*"
 ---
 
 # tRPC + TanStack Query Standards
@@ -37,9 +37,7 @@ const { data, isPending } = useQuery(
 import { skipToken } from "@tanstack/react-query";
 
 const { data } = useQuery(
-  trpc.user.details.queryOptions(
-    userId ? { userId } : skipToken
-  )
+  trpc.user.details.queryOptions(userId ? { userId } : skipToken)
 );
 ```
 
@@ -63,7 +61,10 @@ const { data } = useSuspenseQuery(
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import { createServerSideHelpers } from "@trpc/tanstack-react-query/server";
 
-const helpers = createServerSideHelpers({ router: appRouter, ctx: await createContext() });
+const helpers = createServerSideHelpers({
+  router: appRouter,
+  ctx: await createContext(),
+});
 await helpers.brands.getById.prefetch({ id: params.id });
 
 return (
@@ -126,16 +127,16 @@ const { mutate } = useMutation(
       await queryClient.cancelQueries({
         queryKey: trpc.brands.getById.queryKey({ id: brand.id }),
       });
-      
+
       const previousBrand = queryClient.getQueryData(
         trpc.brands.getById.queryKey({ id: brand.id })
       );
-      
-      queryClient.setQueryData(
-        trpc.brands.getById.queryKey({ id: brand.id }),
-        { ...brand, ...newData }
-      );
-      
+
+      queryClient.setQueryData(trpc.brands.getById.queryKey({ id: brand.id }), {
+        ...brand,
+        ...newData,
+      });
+
       return { previousBrand };
     },
     onError: (err, newData, context) => {
@@ -199,24 +200,20 @@ const brand = queryClient.getQueryData(
 );
 
 // Установить
-queryClient.setQueryData(
-  trpc.brands.getById.queryKey({ id: "123" }),
-  { id: "123", name: "New Brand" }
-);
+queryClient.setQueryData(trpc.brands.getById.queryKey({ id: "123" }), {
+  id: "123",
+  name: "New Brand",
+});
 ```
 
 ### Query Filters
 
 ```tsx
 // Точная фильтрация
-queryClient.invalidateQueries(
-  trpc.brands.getById.queryFilter({ id: "123" })
-);
+queryClient.invalidateQueries(trpc.brands.getById.queryFilter({ id: "123" }));
 
 // Весь роутер
-queryClient.invalidateQueries(
-  trpc.brands.pathFilter()
-);
+queryClient.invalidateQueries(trpc.brands.pathFilter());
 
 // Infinite queries
 queryClient.invalidateQueries(
