@@ -1,9 +1,8 @@
-import type React from "react";
-import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
-import { OrganizationJsonLd } from "@/components/organization-json-ld";
 import { Toaster } from "@spilwood/ui";
+import { Analytics } from "@vercel/analytics/next";
+import type { Metadata } from "next";
+import { Geist_Mono, Inter } from "next/font/google";
+import { OrganizationJsonLd } from "@/components/organization-json-ld";
 import { TRPCReactProvider } from "~/trpc/react";
 import "./globals.css";
 
@@ -42,7 +41,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  generator: "v0.app",
 };
 
 export default function RootLayout({
