@@ -2,7 +2,6 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { ThemeProvider } from "@/components/theme-provider";
 import { OrganizationJsonLd } from "@/components/organization-json-ld";
 import { Toaster } from "@spilwood/ui";
 import { TRPCReactProvider } from "~/trpc/react";
@@ -60,18 +59,11 @@ export default function RootLayout({
         className={`${inter.className} ${geistMono.variable} font-sans antialiased`}
       >
         <TRPCReactProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <a href="#main-content" className="skip-to-content">
-              Перейти к содержимому
-            </a>
-            {children}
-            <Toaster position="bottom-right" richColors closeButton />
-          </ThemeProvider>
+          <a href="#main-content" className="skip-to-content">
+            Перейти к содержимому
+          </a>
+          {children}
+          <Toaster position="bottom-right" richColors closeButton />
         </TRPCReactProvider>
         <Analytics />
       </body>
